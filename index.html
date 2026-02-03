@@ -1,78 +1,99 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>SENSIO – Knowledge Platform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>SENSIO | موسوعة المعرفة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      background: #ffffff;
-      color: #000;
-    }
-
-    header {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #0d6efd, #ffc107, #dc3545);
-      color: #fff;
-    }
-
-    header h1 {
-      font-size: 52px;
-      margin: 0;
-      letter-spacing: 3px;
-    }
-
-    header p {
-      font-size: 20px;
-      margin-top: 10px;
-      font-weight: 500;
-    }
-
-    section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      border: 2px solid #eee;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
-
-    .card h3 {
-      color: #0d6efd;
-      margin-top: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: #111;
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    .gold { color: #d4af37; }
-    .silver { color: #bfc1c2; }
-  </style>
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI,Tahoma,Arial,sans-serif;
+  background:#fff;
+  color:#000;
+  line-height:1.7;
+}
+header{
+  background:linear-gradient(135deg,#0d6efd,#ffc107,#dc3545);
+  color:#fff;
+  text-align:center;
+  padding:70px 20px;
+}
+header h1{
+  font-size:56px;
+  margin:0;
+  letter-spacing:4px;
+}
+header p{
+  font-size:20px;
+  margin-top:10px;
+}
+nav{
+  background:#111;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  padding:15px 20px;
+  font-weight:500;
+}
+nav a:hover{
+  background:#ffc107;
+  color:#000;
+}
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
+}
+h2{
+  color:#0d6efd;
+  margin-bottom:20px;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+.card{
+  border:2px solid #eee;
+  border-radius:16px;
+  padding:30px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+.audio-box{
+  text-align:center;
+  margin-top:30px;
+}
+button{
+  background:#0d6efd;
+  color:#fff;
+  border:none;
+  padding:15px 25px;
+  font-size:16px;
+  border-radius:30px;
+  cursor:pointer;
+}
+button:hover{
+  background:#dc3545;
+}
+footer{
+  background:#111;
+  color:#aaa;
+  text-align:center;
+  padding:30px 15px;
+}
+.gold{color:#d4af37}
+.silver{color:#bfc1c2}
+</style>
 </head>
 
 <body>
@@ -80,39 +101,93 @@
 <header>
   <h1>SENSIO</h1>
   <p>Knowledge • Facts • Science</p>
-  <p>المعرفة | الحقائق | العلم</p>
+  <p>موسوعة شاملة للمعرفة والحقائق</p>
 </header>
 
-<section>
-  <div class="cards">
+<nav>
+  <a href="#facts">العلوم</a>
+  <a href="#knowledge">المعرفة</a>
+  <a href="#languages">اللغات</a>
+  <a href="#tech">التكنولوجيا</a>
+  <a href="#arts">الفنون</a>
+  <a href="#about">عن Sensio</a>
+</nav>
 
-    <div class="card">
-      <h3>Science & Facts</h3>
-      <p>حقائق علمية مذهلة عن الإنسان، الكون، والطبيعة بأسلوب بسيط وسريع.</p>
-    </div>
-
-    <div class="card">
-      <h3>Languages</h3>
-      <p>تعلم اللغات بطريقة ذكية وسلسة مع محتوى صوتي ومرئي.</p>
-    </div>
-
-    <div class="card">
-      <h3>Arts & Culture</h3>
-      <p>الفنون، التاريخ، والثقافة في قالب احترافي ممتع.</p>
-    </div>
-
-    <div class="card">
-      <h3>Technology</h3>
-      <p>أحدث ما توصل إليه العلم والتكنولوجيا والذكاء الاصطناعي.</p>
-    </div>
-
+<section id="facts">
+<h2>Facts & Science | الحقائق والعلوم</h2>
+<div class="cards">
+  <div class="card">
+    <h3>Human Brain</h3>
+    <p>أسرار مذهلة عن الدماغ البشري والوعي والذاكرة.</p>
   </div>
+  <div class="card">
+    <h3>Space</h3>
+    <p>الفضاء، الكواكب، والمجرات بلغة مبسطة.</p>
+  </div>
+</div>
+</section>
+
+<section id="knowledge">
+<h2>Knowledge | المعرفة العامة</h2>
+<div class="cards">
+  <div class="card">
+    <h3>History</h3>
+    <p>حقائق تاريخية غير متوقعة.</p>
+  </div>
+  <div class="card">
+    <h3>Culture</h3>
+    <p>الثقافات والعادات الغريبة حول العالم.</p>
+  </div>
+</div>
+</section>
+
+<section id="languages">
+<h2>Languages | اللغات</h2>
+<div class="cards">
+  <div class="card">
+    <h3>English</h3>
+    <p>تعلم الإنجليزية بسهولة ونطق سليم.</p>
+  </div>
+</div>
+</section>
+
+<section id="tech">
+<h2>Technology | التكنولوجيا</h2>
+<div class="cards">
+  <div class="card">
+    <h3>Artificial Intelligence</h3>
+    <p>الذكاء الاصطناعي وتأثيره على المستقبل.</p>
+  </div>
+</div>
+</section>
+
+<section id="arts">
+<h2>Arts & Creativity | الفنون والإبداع</h2>
+<div class="cards">
+  <div class="card">
+    <h3>Creative Thinking</h3>
+    <p>فن، إبداع، وأفكار ملهمة.</p>
+  </div>
+</div>
+</section>
+
+<section id="about">
+<h2>About Sensio | عن Sensio</h2>
+<p>
+Sensio هي منصة معرفية تهدف إلى تقديم العلم، الحقائق، والثقافة
+بأسلوب بسيط واحترافي يجمع بين المتعة والفائدة.
+</p>
+
+<div class="audio-box">
+  <p>🎧 رسالة ترحيب صوتية (جاهزة لاحقًا)</p>
+  <button onclick="alert('سيتم إضافة الصوت قريبًا')">تشغيل</button>
+</div>
 </section>
 
 <footer>
-  © 2026 <span class="gold">SENSIO</span> — All Rights Reserved  
-  <br>
-  <span class="silver">Powered by Knowledge</span>
+© 2026 <span class="gold">SENSIO</span>  
+<br>
+<span class="silver">Knowledge is Power</span>
 </footer>
 
 </body>
