@@ -2,10 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sensio</title>
+  <title>Sensio | Knowledge Without Limits</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>SENSIO</h1>
-  <p>Knowledge • Facts • Science</p>
+
+<header class="header">
+  <div class="brand">
+    <h1>SENSIO</h1>
+    <p>Knowledge • Facts • Science</p>
+  </div>
+  <div class="lang-switch">
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('ar')">AR</button>
+  </div>
+</header>
+
+<nav class="nav">
+  <a href="#" data-en="Home" data-ar="الرئيسية"></a>
+  <a href="#" data-en="Science" data-ar="العلوم"></a>
+  <a href="#" data-en="Languages" data-ar="اللغات"></a>
+  <a href="#" data-en="Articles" data-ar="مقالات"></a>
+  <a href="#" data-en="About" data-ar="عن الموقع"></a>
+</nav>
+
+<section class="hero">
+  <h2 data-en="Official Source of Verified Knowledge"
+      data-ar="المصدر الرسمي للمعرفة الموثوقة"></h2>
+  <p data-en="Explore facts, science, languages, and hidden truths."
+     data-ar="اكتشف الحقائق، العلوم، اللغات، وأسرار العالم من حولك."></p>
+</section>
+
+<section class="cards">
+  <div class="card gold">
+    <h3 data-en="Science" data-ar="العلوم"></h3>
+    <p data-en="Clear scientific facts explained professionally."
+       data-ar="حقائق علمية موثوقة بشرح مبسط واحترافي."></p>
+  </div>
+
+  <div class="card silver">
+    <h3 data-en="Languages" data-ar="اللغات"></h3>
+    <p data-en="Learn pronunciation with real audio."
+       data-ar="تعلم النطق الصحيح باستخدام الصوت الحقيقي."></p>
+    <button onclick="playHello()">🔊</button>
+  </div>
+
+  <div class="card blue">
+    <h3 data-en="Articles" data-ar="مقالات"></h3>
+    <p data-en="Read and listen to premium content."
+       data-ar="اقرأ واستمع إلى محتوى مميز."></p>
+  </div>
+</section>
+
+<section class="welcome">
+  <p data-en="🎧 Welcome to Sensio" data-ar="🎧 مرحبًا بك في Sensio"></p>
+  <button onclick="playWelcome()" data-en="Listen" data-ar="استمع"></button>
+</section>
+
+<audio id="welcomeAudio" src="audio/welcome.mp3"></audio>
+<audio id="helloAudio" src="audio/hello.mp3"></audio>
+
+<footer>
+  <span data-en="© 2026 Sensio – All Rights Reserved"
+        data-ar="© 2026 Sensio – جميع الحقوق محفوظة"></span>
+</footer>
+
 </body>
-</html>
+    </html>
