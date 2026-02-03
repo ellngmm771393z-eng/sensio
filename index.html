@@ -1,72 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>Sensio | Knowledge Without Limits</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <title>SENSIO – Knowledge Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: #ffffff;
+      color: #000;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #0d6efd, #ffc107, #dc3545);
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 52px;
+      margin: 0;
+      letter-spacing: 3px;
+    }
+
+    header p {
+      font-size: 20px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      border: 2px solid #eee;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      color: #0d6efd;
+      margin-top: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #111;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .gold { color: #d4af37; }
+    .silver { color: #bfc1c2; }
+  </style>
 </head>
+
 <body>
 
-<header class="header">
-  <div class="brand">
-    <h1>SENSIO</h1>
-    <p>Knowledge • Facts • Science</p>
-  </div>
-  <div class="lang-switch">
-    <button onclick="setLang('en')">EN</button>
-    <button onclick="setLang('ar')">AR</button>
-  </div>
+<header>
+  <h1>SENSIO</h1>
+  <p>Knowledge • Facts • Science</p>
+  <p>المعرفة | الحقائق | العلم</p>
 </header>
 
-<nav class="nav">
-  <a href="#" data-en="Home" data-ar="الرئيسية"></a>
-  <a href="#" data-en="Science" data-ar="العلوم"></a>
-  <a href="#" data-en="Languages" data-ar="اللغات"></a>
-  <a href="#" data-en="Articles" data-ar="مقالات"></a>
-  <a href="#" data-en="About" data-ar="عن الموقع"></a>
-</nav>
+<section>
+  <div class="cards">
 
-<section class="hero">
-  <h2 data-en="Official Source of Verified Knowledge"
-      data-ar="المصدر الرسمي للمعرفة الموثوقة"></h2>
-  <p data-en="Explore facts, science, languages, and hidden truths."
-     data-ar="اكتشف الحقائق، العلوم، اللغات، وأسرار العالم من حولك."></p>
-</section>
+    <div class="card">
+      <h3>Science & Facts</h3>
+      <p>حقائق علمية مذهلة عن الإنسان، الكون، والطبيعة بأسلوب بسيط وسريع.</p>
+    </div>
 
-<section class="cards">
-  <div class="card gold">
-    <h3 data-en="Science" data-ar="العلوم"></h3>
-    <p data-en="Clear scientific facts explained professionally."
-       data-ar="حقائق علمية موثوقة بشرح مبسط واحترافي."></p>
-  </div>
+    <div class="card">
+      <h3>Languages</h3>
+      <p>تعلم اللغات بطريقة ذكية وسلسة مع محتوى صوتي ومرئي.</p>
+    </div>
 
-  <div class="card silver">
-    <h3 data-en="Languages" data-ar="اللغات"></h3>
-    <p data-en="Learn pronunciation with real audio."
-       data-ar="تعلم النطق الصحيح باستخدام الصوت الحقيقي."></p>
-    <button onclick="playHello()">🔊</button>
-  </div>
+    <div class="card">
+      <h3>Arts & Culture</h3>
+      <p>الفنون، التاريخ، والثقافة في قالب احترافي ممتع.</p>
+    </div>
 
-  <div class="card blue">
-    <h3 data-en="Articles" data-ar="مقالات"></h3>
-    <p data-en="Read and listen to premium content."
-       data-ar="اقرأ واستمع إلى محتوى مميز."></p>
+    <div class="card">
+      <h3>Technology</h3>
+      <p>أحدث ما توصل إليه العلم والتكنولوجيا والذكاء الاصطناعي.</p>
+    </div>
+
   </div>
 </section>
-
-<section class="welcome">
-  <p data-en="🎧 Welcome to Sensio" data-ar="🎧 مرحبًا بك في Sensio"></p>
-  <button onclick="playWelcome()" data-en="Listen" data-ar="استمع"></button>
-</section>
-
-<audio id="welcomeAudio" src="audio/welcome.mp3"></audio>
-<audio id="helloAudio" src="audio/hello.mp3"></audio>
 
 <footer>
-  <span data-en="© 2026 Sensio – All Rights Reserved"
-        data-ar="© 2026 Sensio – جميع الحقوق محفوظة"></span>
+  © 2026 <span class="gold">SENSIO</span> — All Rights Reserved  
+  <br>
+  <span class="silver">Powered by Knowledge</span>
 </footer>
 
 </body>
-    </html>
+</html>
