@@ -2,190 +2,170 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>SENSIO | موسوعة المعرفة</title>
+<title>Axia 4.4 Full AI Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,Tahoma,Arial,sans-serif;
-  background:#fff;
-  color:#000;
-  line-height:1.7;
-}
-header{
-  background:linear-gradient(135deg,#0d6efd,#ffc107,#dc3545);
-  color:#fff;
-  text-align:center;
-  padding:70px 20px;
-}
-header h1{
-  font-size:56px;
-  margin:0;
-  letter-spacing:4px;
-}
-header p{
-  font-size:20px;
-  margin-top:10px;
-}
-nav{
-  background:#111;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-nav a{
-  color:#fff;
-  text-decoration:none;
-  padding:15px 20px;
-  font-weight:500;
-}
-nav a:hover{
-  background:#ffc107;
-  color:#000;
-}
-section{
-  max-width:1200px;
-  margin:auto;
-  padding:60px 20px;
-}
-h2{
-  color:#0d6efd;
-  margin-bottom:20px;
-}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
-}
-.card{
-  border:2px solid #eee;
-  border-radius:16px;
-  padding:30px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  transition:.3s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 20px 40px rgba(0,0,0,0.15);
-}
-.audio-box{
-  text-align:center;
-  margin-top:30px;
-}
-button{
-  background:#0d6efd;
-  color:#fff;
-  border:none;
-  padding:15px 25px;
-  font-size:16px;
-  border-radius:30px;
-  cursor:pointer;
-}
-button:hover{
-  background:#dc3545;
-}
-footer{
-  background:#111;
-  color:#aaa;
-  text-align:center;
-  padding:30px 15px;
-}
-.gold{color:#d4af37}
-.silver{color:#bfc1c2}
-</style>
-</head>
+body{margin:0;font-family:Segoe UI,Tahoma,Arial,sans-serif;background:#fff;color:#000;line-height:1.7;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;overflow-x:hidden;transition:background 1s linear;}
+@keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
-<body>
+header{background:linear-gradient(135deg,#0d6efd,#ffc107,#dc3545,#d4af37,#bfc1c2);background-size:400% 400%;animation:gradientBG 20s ease infinite;color:#fff;text-align:center;padding:70px 20px;border-bottom:4px solid #0d6efd;}
+header h1{font-size:50px;margin:0;letter-spacing:4px;text-shadow:2px 2px 5px rgba(0,0,0,0.3);}
+header p{font-size:20px;margin-top:10px;background:linear-gradient(45deg,#0d6efd,#ffc107,#dc3545,#d4af37,#bfc1c2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientBG 15s ease infinite;}
+
+#news-ticker{background:#111;color:#fff;padding:12px;overflow:hidden;white-space:nowrap;cursor:pointer;}
+#news-ticker span{display:inline-block;padding-left:100%;animation:news-scroll 25s linear infinite;}
+#news-ticker:hover span{animation-play-state:paused;}
+@keyframes news-scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+#sidebarToggle{position:fixed;left:10px;top:15px;font-size:30px;cursor:pointer;color:#0d6efd;z-index:1000;transition:.3s;}
+#sidebarToggle:hover{transform: scale(1.2);}
+#sidebar{position:fixed;left:-280px;top:0;width:280px;height:100%;background:#111;color:#fff;transition:0.4s;z-index:999;overflow-y:auto;padding-top:60px;box-shadow:5px 0 15px rgba(0,0,0,0.3);border-right:2px solid #ffc107;}
+#sidebar.show{left:0;}
+#sidebar a{display:flex;align-items:center;padding:15px 20px;color:#fff;text-decoration:none;transition:0.3s;border-bottom:1px solid #222;}
+#sidebar a:hover{background:#ffc107;color:#000;}
+#sidebar a .icon{margin-right:10px;font-size:20px;transition:0.3s;}
+#sidebar a:hover .icon{animation:icon-hover 0.6s ease infinite;}
+@keyframes icon-hover{0%{transform:rotate(0deg);}25%{transform:rotate(10deg) scale(1.1);}50%{transform:rotate(-10deg) scale(1.2);}75%{transform:rotate(10deg) scale(1.1);}100%{transform:rotate(0deg);}}
+
+section{max-width:1200px;margin:auto;padding:60px 20px;opacity:0;transform:translateY(40px);transition:all 1s ease;}
+section.visible{opacity:1;transform:translateY(0);}
+h2{color:#0d6efd;margin-bottom:20px;display:flex;align-items:center;}
+h2::before{content:"🔹 ";margin-right:10px;animation:glow 2s infinite alternate;}
+@keyframes glow{0%{text-shadow:0 0 5px #ffc107;}50%{text-shadow:0 0 10px #dc3545;}100%{text-shadow:0 0 15px #0d6efd;}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;}
+.card{border:2px solid #eee;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.08);transition:.4s;position:relative;overflow:hidden;}
+.card:hover{transform:translateY(-10px) scale(1.06);box-shadow:0 25px 50px rgba(0,0,0,0.3);background:linear-gradient(120deg,#ffc107,#0d6efd,#dc3545,#d4af37);color:#fff;}
+.card:hover .icon{transform:rotate(20deg) scale(1.2);animation:icon-hover 0.6s ease infinite;}
+.icon{font-size:30px;margin-right:10px;transition:0.3s;}
+
+.audio-box, .quran-box, .video-box{text-align:center;margin-top:30px;}
+button, select{background:#0d6efd;color:#fff;border:none;padding:12px 20px;font-size:16px;border-radius:30px;cursor:pointer;margin:5px;transition:.3s;}
+button:hover, select:hover{background:#dc3545;transform:scale(1.1);box-shadow:0 5px 20px rgba(0,0,0,0.4);}
+
+footer{background:#111;color:#aaa;text-align:center;padding:30px 15px;}
+.gold{color:#d4af37}.silver{color:#bfc1c2}
+
+@media(max-width:768px){header h1{font-size:36px;}section{padding:40px 15px;}}
+</style>
+
+<script>
+// منع النسخ والزر الأيمن
+document.addEventListener('contextmenu', e=>e.preventDefault());
+document.addEventListener('copy', e=>e.preventDefault());
+document.addEventListener('selectstart', e=>e.preventDefault());
+
+// Sidebar Toggle
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('show');}
+
+// رسالة ترحيبية صوتية
+function playWelcome(){let audio=new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); audio.play();}
+
+// قراءة مقال صوتياً (TTS)
+function readArticle(id, lang='ar-SA'){let text=document.getElementById(id).innerText;let speech=new SpeechSynthesisUtterance(text);speech.lang=lang;window.speechSynthesis.speak(speech);}
+
+// Scroll Animations
+function revealSections(){let sections=document.querySelectorAll('section');sections.forEach(sec=>{let top=sec.getBoundingClientRect().top;if(top<window.innerHeight-50) sec.classList.add('visible');});}
+window.addEventListener('scroll',revealSections);
+window.addEventListener('load',revealSections);
+
+// تحديث الأخبار ديناميكياً عبر APIs حقيقية
+async function updateNewsLive(){
+  let ticker=document.getElementById('news-ticker').querySelector('span');
+  try{
+    const res = await fetch('https://api.currentsapi.services/v1/latest-news?apiKey=demo'); // ضع API حقيقية هنا
+    const data = await res.json();
+    const titles = data.news.slice(0,10).map(n=>n.title);
+    ticker.innerText = titles.join(" | ") + " | ";
+  }catch(err){
+    ticker.innerText = "تعذر جلب الأخبار الحية، يتم التحديث قريباً...";
+  }
+}
+
+// AI Real-Time Mock: توليد محتوى حقيقي لاحقاً باستخدام API
+async function generateArticleAI(topicId, outputId){
+  let output=document.getElementById(outputId);
+  output.innerText="...جاري توليد المقال بالذكاء الاصطناعي (Mockup) ...";
+  // لاحقاً يمكن ربط API حقيقية هنا لتوليد المقال
+}
+</script>
+
+</head>
+<body onload="updateNewsLive(); playWelcome();">
+
+<div id="sidebarToggle" onclick="toggleSidebar()">☰</div>
+<div id="sidebar">
+  <a href="#facts"><span class="icon">🧠</span>العلوم</a>
+  <a href="#knowledge"><span class="icon">📚</span>المعرفة</a>
+  <a href="#languages"><span class="icon">🗣️</span>اللغات</a>
+  <a href="#tech"><span class="icon">💻</span>التكنولوجيا</a>
+  <a href="#arts"><span class="icon">🎨</span>الفنون</a>
+  <a href="#quran"><span class="icon">📖</span>القرآن الكريم</a>
+  <a href="#videos"><span class="icon">🎬</span>الفيديوهات</a>
+  <a href="#about"><span class="icon">ℹ️</span>عن Axia</a>
+</div>
 
 <header>
-  <h1>SENSIO</h1>
+  <h1>Axia 4.4 Full AI Studio</h1>
   <p>Knowledge • Facts • Science</p>
-  <p>موسوعة شاملة للمعرفة والحقائق</p>
+  <p>موسوعة شاملة للمعرفة والحقائق مع AI حي وتوليد الوسائط</p>
 </header>
 
-<nav>
-  <a href="#facts">العلوم</a>
-  <a href="#knowledge">المعرفة</a>
-  <a href="#languages">اللغات</a>
-  <a href="#tech">التكنولوجيا</a>
-  <a href="#arts">الفنون</a>
-  <a href="#about">عن Sensio</a>
-</nav>
+<div id="news-ticker">
+  <span>جاري تحديث الأخبار الحية...</span>
+</div>
 
 <section id="facts">
-<h2>Facts & Science | الحقائق والعلوم</h2>
+<h2><span class="icon">🧠</span>Facts & Science | الحقائق والعلوم</h2>
 <div class="cards">
   <div class="card">
     <h3>Human Brain</h3>
-    <p>أسرار مذهلة عن الدماغ البشري والوعي والذاكرة.</p>
-  </div>
-  <div class="card">
-    <h3>Space</h3>
-    <p>الفضاء، الكواكب، والمجرات بلغة مبسطة.</p>
-  </div>
-</div>
-</section>
-
-<section id="knowledge">
-<h2>Knowledge | المعرفة العامة</h2>
-<div class="cards">
-  <div class="card">
-    <h3>History</h3>
-    <p>حقائق تاريخية غير متوقعة.</p>
-  </div>
-  <div class="card">
-    <h3>Culture</h3>
-    <p>الثقافات والعادات الغريبة حول العالم.</p>
+    <p id="brain">الدماغ البشري مليء بالأسرار المذهلة...</p>
+    <p id="brainAI"></p>
+    <button onclick="readArticle('brain','ar-SA')">قراءة بالعربي</button>
+    <button onclick="readArticle('brain','en-US')">Read in English</button>
+    <button onclick="generateArticleAI('brain','brainAI')">توليد AI حقيقي</button>
   </div>
 </div>
 </section>
 
-<section id="languages">
-<h2>Languages | اللغات</h2>
-<div class="cards">
-  <div class="card">
-    <h3>English</h3>
-    <p>تعلم الإنجليزية بسهولة ونطق سليم.</p>
-  </div>
+<section id="quran">
+<h2><span class="icon">📖</span>Quran TV | القرآن الكريم</h2>
+<div class="quran-box">
+  <audio id="quranPlayer" controls autoplay loop>
+    <source src="" type="audio/mp3">
+    متصفحك لا يدعم تشغيل الصوت.
+  </audio>
+  <p>اختر القارئ:</p>
+  <select onchange="document.getElementById('quranPlayer').src=this.value">
+    <option value="">-- اختر القارئ --</option>
+    <option value="https://www.islamicnetwork.com/quran/qari1.mp3">القارئ 1</option>
+    <option value="https://www.islamicnetwork.com/quran/qari2.mp3">القارئ 2</option>
+    <option value="https://www.islamicnetwork.com/quran/qari3.mp3">القارئ 3</option>
+  </select>
 </div>
 </section>
 
-<section id="tech">
-<h2>Technology | التكنولوجيا</h2>
-<div class="cards">
-  <div class="card">
-    <h3>Artificial Intelligence</h3>
-    <p>الذكاء الاصطناعي وتأثيره على المستقبل.</p>
-  </div>
-</div>
-</section>
-
-<section id="arts">
-<h2>Arts & Creativity | الفنون والإبداع</h2>
-<div class="cards">
-  <div class="card">
-    <h3>Creative Thinking</h3>
-    <p>فن، إبداع، وأفكار ملهمة.</p>
-  </div>
+<section id="videos">
+<h2><span class="icon">🎬</span>AI Generated Videos | الفيديوهات التفاعلية</h2>
+<div class="video-box">
+  <p>فيديوهات تجريبية Mockup. لاحقاً سيتم توليد الفيديوهات الحقيقية عبر API.</p>
 </div>
 </section>
 
 <section id="about">
-<h2>About Sensio | عن Sensio</h2>
+<h2><span class="icon">ℹ️</span>About Axia | عن Axia</h2>
 <p>
-Sensio هي منصة معرفية تهدف إلى تقديم العلم، الحقائق، والثقافة
-بأسلوب بسيط واحترافي يجمع بين المتعة والفائدة.
+Axia 4.4 Full AI Studio هي منصة معرفية شاملة تقدم العلم، الحقائق، والثقافة
+بأسلوب احترافي يجمع بين المتعة والفائدة مع AI حي لتوليد كل شيء.
 </p>
-
 <div class="audio-box">
-  <p>🎧 رسالة ترحيب صوتية (جاهزة لاحقًا)</p>
-  <button onclick="alert('سيتم إضافة الصوت قريبًا')">تشغيل</button>
+  <p>🎧 رسالة ترحيب صوتية</p>
+  <button onclick="playWelcome()">تشغيل الترحيب</button>
 </div>
 </section>
 
 <footer>
-© 2026 <span class="gold">SENSIO</span>  
+© 2026 <span class="gold">Axia</span>  
 <br>
 <span class="silver">Knowledge is Power</span>
 </footer>
