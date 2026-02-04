@@ -5,30 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Axia – Knowledge • Facts • Science</title>
 <style>
-  /* CSS داخلي كامل */
   body {font-family: Arial, sans-serif; margin:0; background:#fff; color:#000;}
-  header {background: linear-gradient(90deg, #FFD700, #FF4500, #1E90FF); color:#fff; padding:15px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);}
-  header h1 {margin:0; font-size:2rem;}
+  header {background: linear-gradient(90deg, #FFD700, #FF4500, #1E90FF); color:#fff; padding:15px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1); position: relative;}
+  header h1 {margin:0; font-size:2rem; display: inline-block;}
+  header svg {width:40px; height:40px; vertical-align:middle; margin-right:10px;}
   nav {background:#f2f2f2; padding:10px; display:flex; justify-content:center;}
   nav a {margin:0 10px; text-decoration:none; color:#000; font-weight:bold; transition:0.3s;}
   nav a:hover {color:#1E90FF;}
+  .news-ticker {background:#FFD700; overflow:hidden; white-space:nowrap; padding:5px;}
+  .news-ticker p {display:inline-block; padding-right:50px; animation:scroll 20s linear infinite; margin:0;}
+  @keyframes scroll {0% {transform:translateX(100%);} 100% {transform:translateX(-100%);}}
   main {display:flex; flex-wrap:wrap; padding:15px;}
   .sidebar {flex:1 1 200px; background:#f9f9f9; padding:10px; margin-right:15px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
   .content {flex:3 1 600px; padding:10px;}
   .section {margin-bottom:20px; border-bottom:2px solid #ddd; padding-bottom:15px;}
   h2 {color:#FF4500;}
-  .news-ticker {background:#FFD700; overflow:hidden; white-space:nowrap;}
-  .news-ticker p {display:inline-block; padding-right:50px; animation:scroll 20s linear infinite;}
-  @keyframes scroll {0% {transform:translateX(100%);} 100% {transform:translateX(-100%);}}
   audio {width:100%; margin-top:10px; border-radius:5px;}
   select {padding:5px; margin-top:5px; width:100%;}
   footer {background:#1E90FF; color:#fff; text-align:center; padding:10px; margin-top:20px;}
-  article {margin-bottom:10px;}
+  button {padding:5px 10px; margin:5px; border:none; border-radius:5px; cursor:pointer;}
+  .playBtn {background:#1E90FF; color:#fff;}
+  .stopBtn {background:#FF4500; color:#fff;}
 </style>
 </head>
 <body>
 
 <header>
+  <!-- شعار بصري SVG -->
+  <svg viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" stroke="#FFD700" stroke-width="5" fill="#1E90FF"/>
+    <text x="50%" y="55%" text-anchor="middle" font-size="40" fill="#FFD700" font-family="Arial" dy=".3em">A</text>
+    <line x1="50" y1="50" x2="80" y2="20" stroke="#FFD700" stroke-width="5"/>
+  </svg>
   <h1>Axia</h1>
   <p>Knowledge • Facts • Science</p>
 </header>
@@ -44,7 +52,6 @@
 </div>
 
 <main>
-  <!-- لوحة جانبية للمقالات -->
   <aside class="sidebar">
     <h3>المقالات</h3>
     <ul>
@@ -57,16 +64,14 @@
   </aside>
 
   <section class="content">
-    <!-- الصفحة الرئيسية -->
     <div id="home" class="section">
       <h2>مرحبا بك في موسوعة Axia</h2>
       <p>موسوعة شاملة لجميع العلوم والمعرفة والفنون واللغات والتكنولوجيا. استكشف وابدأ التعلم الآن!</p>
     </div>
 
-    <!-- القرآن الكريم -->
     <div id="quran" class="section">
       <h2>📖 القرآن الكريم – بث مباشر</h2>
-      <audio id="quranRadio" controls autoplay>
+      <audio id="quranRadio" controls>
         <source src="" type="audio/mpeg">
         المتصفح لا يدعم تشغيل الصوت.
       </audio>
@@ -80,10 +85,8 @@
         <option value="https://quranstream.net/stream/Abdul_Rahman_As_Sudais">عبد الرحمن السديس</option>
         <option value="https://quranstream.net/stream/Maher_Al_Muaiqly">ماهر المعيقلي</option>
       </select>
-      <p>البث مباشر ومجاني 24/7 من محطات القرآن العالمية.</p>
     </div>
 
-    <!-- قسم المقالات -->
     <div id="articles" class="section">
       <h2>المقالات</h2>
       <article id="science"><h3>علوم</h3><p>أحدث المقالات العلمية والأبحاث.</p></article>
@@ -92,15 +95,21 @@
       <article id="technology"><h3>تكنولوجيا</h3><p>آخر أخبار التكنولوجيا والابتكارات الحديثة.</p></article>
       <article id="arts"><h3>فنون</h3><p>أعمال فنية، ثقافة وإبداع.</p></article>
     </div>
+
+    <div class="section">
+      <h2>رسالة الترحيب الصوتية</h2>
+      <audio id="welcomeAudio">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        المتصفح لا يدعم تشغيل الصوت.
+      </audio>
+      <div>
+        <button class="playBtn" onclick="document.getElementById('welcomeAudio').play();">تشغيل الترحيب</button>
+        <button class="stopBtn" onclick="document.getElementById('welcomeAudio').pause();">إيقاف الترحيب</button>
+      </div>
+    </div>
+
   </section>
 </main>
-
-<!-- رسالة ترحيب صوتية -->
-<audio id="welcomeAudio" autoplay>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  المتصفح لا يدعم تشغيل الصوت.
-</audio>
-<button onclick="document.getElementById('welcomeAudio').pause();">إيقاف رسالة الترحيب</button>
 
 <footer>
   <p>© 2026 Axia. كل الحقوق محفوظة.</p>
