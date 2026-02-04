@@ -13,7 +13,7 @@
   nav a {margin:0 10px; text-decoration:none; color:#000; font-weight:bold; transition:0.3s;}
   nav a:hover {color:#1E90FF;}
   .news-ticker {background:#FFD700; overflow:hidden; white-space:nowrap; padding:5px;}
-  .news-ticker p {display:inline-block; padding-right:50px; animation:scroll 20s linear infinite; margin:0;}
+  .news-ticker span {display:inline-block; padding-right:50px;}
   @keyframes scroll {0% {transform:translateX(100%);} 100% {transform:translateX(-100%);}}
   main {display:flex; flex-wrap:wrap; padding:15px;}
   .sidebar {flex:1 1 200px; background:#f9f9f9; padding:10px; margin-right:15px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
@@ -31,7 +31,7 @@
 <body>
 
 <header>
-  <!-- شعار بصري SVG -->
+  <!-- مكان اللوجو الأصلي -->
   <svg viewBox="0 0 100 100">
     <circle cx="50" cy="50" r="45" stroke="#FFD700" stroke-width="5" fill="#1E90FF"/>
     <text x="50%" y="55%" text-anchor="middle" font-size="40" fill="#FFD700" font-family="Arial" dy=".3em">A</text>
@@ -47,8 +47,8 @@
   <a href="#articles">المقالات</a>
 </nav>
 
-<div class="news-ticker">
-  <p>📰 آخر الأخبار العالمية: سيتم التحديث لاحقاً … تابع الأخبار الحية من وكالات الأنباء العالمية</p>
+<div class="news-ticker" id="newsTicker">
+  <span>جاري تحميل الأخبار...</span>
 </div>
 
 <main>
@@ -74,20 +74,18 @@
       <audio id="quranRadio" controls></audio>
       <select onchange="playQuran(this.value)">
         <option value="">-- اختر الإذاعة --</option>
-        <option value="https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_vi/hls_snrt_radio/index.m3u8">
-          🇲🇦 إذاعة محمد السادس – المغرب
-        </option>
-        <option value="https://stream.radiojar.com/0tpy1h0kxtzuv">📖 قرآن – Stream عام</option>
+        <option value="https://stream.radiojar.com/0tpy1h0kxtzuv">📖 القرآن – Stream مباشر</option>
+        <option value="https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_vi/hls_snrt_radio/index.m3u8">🇲🇦 إذاعة محمد السادس – المغرب</option>
       </select>
     </div>
 
     <div id="articles" class="section">
       <h2>المقالات</h2>
-      <article id="science"><h3>علوم</h3><p>أحدث المقالات العلمية والأبحاث.</p></article>
-      <article id="knowledge"><h3>معرفة</h3><p>موسوعة المعرفة العامة والمعلومات المفيدة.</p></article>
-      <article id="languages"><h3>لغات</h3><p>تعلم اللغات المختلفة ومهارات جديدة.</p></article>
-      <article id="technology"><h3>تكنولوجيا</h3><p>آخر أخبار التكنولوجيا والابتكارات الحديثة.</p></article>
-      <article id="arts"><h3>فنون</h3><p>أعمال فنية، ثقافة وإبداع.</p></article>
+      <article id="science"><h3>علوم</h3><p>أضف مقالاتك العلمية هنا.</p></article>
+      <article id="knowledge"><h3>معرفة</h3><p>أضف مواضيع المعرفة هنا.</p></article>
+      <article id="languages"><h3>لغات</h3><p>أضف محتوى تعلم اللغات هنا.</p></article>
+      <article id="technology"><h3>تكنولوجيا</h3><p>أضف مقالات التكنولوجيا هنا.</p></article>
+      <article id="arts"><h3>فنون</h3><p>أضف مقالاتك الفنية والثقافية هنا.</p></article>
     </div>
 
     <div class="section">
@@ -124,6 +122,25 @@
     radio.src = url;
     radio.play();
   }
+
+  // تحميل أخبار حقيقية من RSS
+  async function loadNews() {
+    const rssUrl = "https://feeds.bbci.co.uk/arabic/rss.xml";
+    try {
+      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+      const data = await res.json();
+      const ticker = document.getElementById("newsTicker");
+      ticker.innerHTML = "";
+      data.items.slice(0,10).forEach(item => {
+        const newsItem = document.createElement("span");
+        newsItem.innerHTML = `📰 <a href="${item.link}" target="_blank">${item.title}</a> &nbsp;&nbsp;&nbsp;`;
+        ticker.appendChild(newsItem);
+      });
+    } catch(e) {
+      document.getElementById("newsTicker").innerHTML = "تعذر تحميل الأخبار الآن";
+    }
+  }
+  loadNews();
 </script>
 
 </body>
