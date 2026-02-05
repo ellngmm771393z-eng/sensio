@@ -1,265 +1,118 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Axia | المعرفة • الحقائق • العلم</title>
-
+<title>Axia – Knowledge • Facts • Science</title>
 <style>
-
-/* ===== الأساسيات ===== */
-body{
-margin:0;
-font-family:Cairo, Arial, sans-serif;
-background:#f5f7fa;
-color:#222;
-}
-
-/* ===== الهيدر ===== */
-header{
-background:linear-gradient(90deg,#0b3d91,#d4af37);
-color:white;
-padding:12px 25px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.logo img{
-height:45px;
-}
-
-header h1{
-margin:0;
-font-size:26px;
-}
-
-.tagline{
-font-size:13px;
-opacity:.9;
-}
-
-/* ===== القائمة ===== */
-nav{
-background:white;
-padding:10px;
-text-align:center;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-nav a{
-margin:0 12px;
-text-decoration:none;
-color:#0b3d91;
-font-weight:bold;
-}
-
-/* ===== شريط الأخبار ===== */
-.news{
-background:#d4af37;
-color:#000;
-padding:6px;
-white-space:nowrap;
-overflow:hidden;
-}
-
-/* ===== التخطيط ===== */
-.container{
-display:flex;
-flex-wrap:wrap;
-padding:15px;
-gap:20px;
-}
-
-aside{
-flex:1;
-min-width:220px;
-background:white;
-padding:15px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-aside a{
-display:block;
-padding:8px;
-text-decoration:none;
-color:#333;
-border-radius:6px;
-}
-
-aside a:hover{
-background:#eee;
-}
-
-main{
-flex:3;
-min-width:300px;
-}
-
-/* ===== كروت المحتوى ===== */
-.card{
-background:white;
-padding:20px;
-margin-bottom:20px;
-border-radius:12px;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-/* ===== الراديو ===== */
-audio{
-width:100%;
-margin-top:10px;
-}
-
-select{
-padding:8px;
-width:100%;
-margin-top:10px;
-}
-
-/* ===== الفوتر ===== */
-footer{
-background:#0b3d91;
-color:white;
-text-align:center;
-padding:12px;
-margin-top:25px;
-}
-
-/* منع النسخ */
-body{
-user-select:none;
-}
-
+  /* ألوان زاهية واحترافية */
+  body {font-family: Arial, sans-serif; margin:0; background:#fff; color:#000;}
+  header {background: linear-gradient(90deg, #FFD700, #FF4500, #1E90FF); color:#fff; padding:15px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);}
+  header h1 {margin:0; font-size:2rem;}
+  nav {background:#f2f2f2; padding:10px; display:flex; justify-content:center;}
+  nav a {margin:0 10px; text-decoration:none; color:#000; font-weight:bold; transition:0.3s;}
+  nav a:hover {color:#1E90FF;}
+  main {display:flex; flex-wrap:wrap; padding:15px;}
+  .sidebar {flex:1 1 200px; background:#f9f9f9; padding:10px; margin-right:15px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+  .content {flex:3 1 600px; padding:10px;}
+  .section {margin-bottom:20px; border-bottom:2px solid #ddd; padding-bottom:15px;}
+  h2 {color:#FF4500;}
+  .news-ticker {background:#FFD700; overflow:hidden; white-space:nowrap;}
+  .news-ticker p {display:inline-block; padding-right:50px; animation:scroll 20s linear infinite;}
+  @keyframes scroll {0% {transform:translateX(100%);} 100% {transform:translateX(-100%);}}
+  audio {width:100%; margin-top:10px; border-radius:5px;}
+  select {padding:5px; margin-top:5px; width:100%;}
+  footer {background:#1E90FF; color:#fff; text-align:center; padding:10px; margin-top:20px;}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo">
-<img src="logo.png" alt="Axia Logo">
-<div>
-<h1>Axia</h1>
-<div class="tagline">Knowledge • Facts • Science</div>
-</div>
-</div>
+  <h1>Axia</h1>
+  <p>Knowledge • Facts • Science</p>
 </header>
 
 <nav>
-<a href="#">الرئيسية</a>
-<a href="#quran">القرآن</a>
-<a href="#articles">المقالات</a>
+  <a href="#home">الرئيسية</a>
+  <a href="#quran">القرآن الكريم</a>
+  <a href="#articles">المقالات</a>
 </nav>
 
-<div class="news" id="newsTicker">
-جاري تحميل الأخبار...
+<div class="news-ticker">
+  <p>📰 آخر الأخبار العالمية: سيتم التحديث لاحقاً … تابع الأخبار الحية من وكالات الأنباء العالمية</p>
 </div>
-
-<div class="container">
-
-<aside>
-<h3>الأقسام</h3>
-<a href="#science">علوم</a>
-<a href="#knowledge">معرفة</a>
-<a href="#languages">لغات</a>
-<a href="#technology">تكنولوجيا</a>
-<a href="#arts">فنون</a>
-</aside>
 
 <main>
+  <!-- لوحة جانبية للمقالات -->
+  <aside class="sidebar">
+    <h3>المقالات</h3>
+    <ul>
+      <li><a href="#science">علوم</a></li>
+      <li><a href="#knowledge">معرفة</a></li>
+      <li><a href="#languages">لغات</a></li>
+      <li><a href="#technology">تكنولوجيا</a></li>
+      <li><a href="#arts">فنون</a></li>
+    </ul>
+  </aside>
 
-<div class="card">
-<h2>مرحباً بك في Axia</h2>
-موسوعة معرفية شاملة للعلوم والحقائق والمعرفة الحديثة.
-</div>
+  <section class="content">
+    <!-- الصفحة الرئيسية -->
+    <div id="home" class="section">
+      <h2>مرحبا بك في موسوعة Axia</h2>
+      <p>موسوعة شاملة لجميع العلوم والمعرفة والفنون واللغات والتكنولوجيا. استكشف وابدأ التعلم الآن!</p>
+    </div>
 
-<div class="card" id="quran">
-<h2>📻 راديو القرآن الكريم</h2>
+    <!-- القرآن الكريم -->
+    <div id="quran" class="section">
+      <h2>📖 القرآن الكريم – بث مباشر</h2>
+      <audio id="quranRadio" controls autoplay>
+        <source src="" type="audio/mpeg">
+        المتصفح لا يدعم تشغيل الصوت.
+      </audio>
+      <select onchange="document.getElementById('quranRadio').src=this.value;document.getElementById('quranRadio').play();">
+        <option value="">-- اختر الإذاعة --</option>
+        <option value="https://radioqurancairo.com/">إذاعة القرآن – القاهرة</option>
+        <option value="https://virmach2.hajjam.net/">Radio Coran – المغرب</option>
+        <option value="http://laradio.ma/categories/radio-mohammed-vi-du-saint-coran-%D8%A5%D8%B0%D8%A7%D8%B9%D8%A9-%D9%85%D8%AD%D9%85%D8%AF-%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%B3-%D9%84%D9%84%D9%82%D8%B1%D8%A2%D9%86-%D8%A7%D9%84%D9%83%D8%B1%D9%8A%D9%85/">محمد السادس – المغرب</option>
+        <option value="https://radioplus.sba.sa/en/live/4">إذاعة القرآن – السعودية</option>
+        <option value="https://quranstream.net/stream/Mishary_Rashid_Alafasy">مشاري العفاسي</option>
+        <option value="https://quranstream.net/stream/Abdul_Rahman_As_Sudais">عبد الرحمن السديس</option>
+        <option value="https://quranstream.net/stream/Maher_Al_Muaiqly">ماهر المعيقلي</option>
+      </select>
+      <p>البث مباشر ومجاني 24/7 من محطات القرآن العالمية.</p>
+    </div>
 
-<audio id="radio" controls></audio>
-
-<select onchange="playRadio(this.value)">
-<option value="">اختر الإذاعة</option>
-
-<option value="https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_vi/hls_snrt_radio/index.m3u8">
-إذاعة محمد السادس – المغرب
-</option>
-
-<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">
-بث قرآن مباشر
-</option>
-
-</select>
-</div>
-
-<div class="card" id="articles">
-<h2>المقالات</h2>
-
-<h3 id="science">علوم</h3>
-اكتب مقالاتك العلمية هنا.
-
-<h3 id="knowledge">معرفة</h3>
-محتوى المعرفة العامة.
-
-<h3 id="languages">لغات</h3>
-تعلم اللغات والمقالات التعليمية.
-
-<h3 id="technology">تكنولوجيا</h3>
-أحدث أخبار التكنولوجيا.
-
-<h3 id="arts">فنون</h3>
-مقالات ثقافية وفنية.
-
-</div>
-
+    <!-- قسم المقالات -->
+    <div id="articles" class="section">
+      <h2>المقالات</h2>
+      <article id="science"><h3>علوم</h3><p>أحدث المقالات العلمية والأبحاث.</p></article>
+      <article id="knowledge"><h3>معرفة</h3><p>موسوعة المعرفة العامة والمعلومات المفيدة.</p></article>
+      <article id="languages"><h3>لغات</h3><p>تعلم اللغات المختلفة ومهارات جديدة.</p></article>
+      <article id="technology"><h3>تكنولوجيا</h3><p>آخر أخبار التكنولوجيا والابتكارات الحديثة.</p></article>
+      <article id="arts"><h3>فنون</h3><p>أعمال فنية، ثقافة وإبداع.</p></article>
+    </div>
+  </section>
 </main>
-</div>
+
+<!-- رسالة ترحيب صوتية -->
+<audio id="welcomeAudio" autoplay>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  المتصفح لا يدعم تشغيل الصوت.
+</audio>
+<button onclick="document.getElementById('welcomeAudio').pause();">إيقاف رسالة الترحيب</button>
 
 <footer>
-© 2026 Axia — جميع الحقوق محفوظة
+  <p>© 2026 Axia. كل الحقوق محفوظة.</p>
 </footer>
 
 <script>
-
-/* تشغيل الراديو */
-function playRadio(url){
-const r=document.getElementById("radio");
-r.src=url;
-r.play();
-}
-
-/* أخبار حقيقية */
-async function loadNews(){
-const rss="https://feeds.bbci.co.uk/arabic/rss.xml";
-try{
-const res=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
-const data=await res.json();
-let txt="";
-data.items.slice(0,8).forEach(n=>{
-txt+=` 📰 <a target="_blank" href="${n.link}">${n.title}</a> — `;
-});
-document.getElementById("newsTicker").innerHTML=txt;
-}catch{
-document.getElementById("newsTicker").innerText="تعذر تحميل الأخبار حالياً";
-}
-}
-
-loadNews();
-
-/* منع النسخ */
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.onkeydown=e=>{
-if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false;
-};
-
+  // منع النسخ
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.addEventListener('keydown', function(e) {
+    if(e.ctrlKey && (e.key==='c' || e.key==='x' || e.key==='u' || e.key==='s')) {
+      e.preventDefault();
+    }
+  });
 </script>
 
 </body>
