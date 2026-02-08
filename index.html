@@ -661,3 +661,164 @@ function stopCourse(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="axia-tv">
+<h2>📺 كورس الإنجليزية – Axia Smart TV Final AI</h2>
+
+<canvas id="tvCanvas" width="1280" height="720"></canvas>
+<div id="lessonTitle"></div>
+
+<div class="controls">
+<button onclick="prevLesson()">الدرس السابق</button>
+<button onclick="startCourse()">تشغيل الكورس</button>
+<button onclick="stopCourse()">إيقاف الكورس</button>
+<button onclick="nextLesson()">الدرس التالي</button>
+</div>
+</div>
+
+<style>
+.axia-tv{
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:14px;
+margin:20px 0;
+text-align:center;
+}
+#lessonTitle{
+color:gold;
+font-size:22px;
+margin:10px 0;
+}
+.controls button{
+padding:8px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1E90FF;
+color:#fff;
+cursor:pointer;
+}
+</style>
+
+<script>
+// ======== إعداد الدروس 24 درس (نسخة نهائية) ========
+const lessons = [];
+for(let i=1;i<=24;i++){
+lessons.push({
+title:`درس ${i}: كلمات وجمل أساسية`,
+duration:180, // مدة الدرس بالثواني
+sentences:[
+`Welcome to Lesson ${i}.`,
+`This lesson teaches you new English words and phrases.`,
+`Listen carefully and repeat each sentence.`
+],
+images:[ // صور AI لكل جملة (مثال رمزي بألوان ونصوص)
+`Lesson ${i} Image 1`,
+`Lesson ${i} Image 2`,
+`Lesson ${i} Image 3`
+]
+});
+}
+
+let currentLesson = 0;
+let courseInterval = null;
+const canvas = document.getElementById("tvCanvas");
+const ctx = canvas.getContext("2d");
+
+// ======== رسم درس كامل مع صور افتراضية ========
+function drawLesson(lesson){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // خلفية متدرجة
+  let grad = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  grad.addColorStop(0, `hsl(${currentLesson*15},70%,50%)`);
+  grad.addColorStop(1, `hsl(${currentLesson*15+30},70%,40%)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // عنوان الدرس
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 60px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(lesson.title, canvas.width/2, 80);
+
+  // رسم الجمل + صور افتراضية
+  lesson.sentences.forEach((s,i)=>{
+    ctx.font = "40px Arial";
+    ctx.fillText(s, canvas.width/2, 180 + i*70);
+  });
+
+  // عرض الصور الرمزية تحت الجمل
+  lesson.images.forEach((img,i)=>{
+    ctx.fillStyle = "rgba(255,255,255,0.3)";
+    ctx.fillRect(200 + i*300, 450, 200, 150);
+    ctx.fillStyle = "#fff";
+    ctx.font = "20px Arial";
+    ctx.fillText(img, 300 + i*300, 520);
+  });
+}
+
+// ======== تشغيل صوت AI ========
+function playLessonAudio(sentences){
+  const synth = window.speechSynthesis;
+  synth.cancel();
+
+  let i=0;
+  function speakNext(){
+    if(i<sentences.length){
+      const utter = new SpeechSynthesisUtterance(sentences[i]);
+      utter.lang = 'en-US';
+      utter.onend = ()=>{ i++; speakNext(); };
+      synth.speak(utter);
+    }
+  }
+  speakNext();
+}
+
+// ======== عرض الدرس ========
+function showLesson(index){
+  const lesson = lessons[index];
+  drawLesson(lesson);
+  document.getElementById("lessonTitle").innerText = "📖 الآن: "+lesson.title;
+  playLessonAudio(lesson.sentences);
+
+  clearTimeout(courseInterval);
+  courseInterval = setTimeout(nextLesson, lesson.duration*1000);
+}
+
+// ======== التحكم اليدوي ========
+function nextLesson(){
+  currentLesson = (currentLesson+1) % lessons.length;
+  showLesson(currentLesson);
+}
+
+function prevLesson(){
+  currentLesson = (currentLesson-1+lessons.length) % lessons.length;
+  showLesson(currentLesson);
+}
+
+function startCourse(){
+  showLesson(currentLesson);
+}
+
+function stopCourse(){
+  clearTimeout(courseInterval);
+  window.speechSynthesis.cancel();
+}
+</script>
