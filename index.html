@@ -367,3 +367,143 @@ document.getElementById("aiContent").innerText=
 texts[Math.floor(Math.random()*texts.length)];
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="axia-tv">
+
+<h2>📺 كورس الإنجليزية – Axia Smart TV</h2>
+
+<iframe id="tvFrame"></iframe>
+
+<div id="lessonTitle"></div>
+<div id="aiAudioContainer"></div>
+
+<div class="controls">
+<button onclick="startCourse()">تشغيل الكورس</button>
+<button onclick="stopCourse()">إيقاف الكورس</button>
+<button onclick="nextLesson()">الدرس التالي</button>
+</div>
+
+</div>
+
+<style>
+.axia-tv{
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:14px;
+margin:20px 0;
+}
+
+#tvFrame{
+width:100%;
+height:60vh;
+border:none;
+border-radius:12px;
+background:#111;
+}
+
+#lessonTitle{
+color:gold;
+font-size:20px;
+text-align:center;
+margin:10px 0;
+}
+
+#aiAudioContainer audio{
+width:100%;
+margin-top:10px;
+}
+
+.controls{
+text-align:center;
+margin-top:10px;
+}
+
+.controls button{
+padding:8px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1E90FF;
+color:#fff;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+#tvFrame{height:40vh;}
+}
+</style>
+
+<script>
+// مصفوفة الدروس (تجريبي placeholders)
+const lessons=[
+{title:"درس 1: Greetings", video:"https://www.youtube.com/embed/VIDEO1?autoplay=1", aiText:"Welcome to Lesson 1. Today we learn Greetings."},
+{title:"درس 2: Introductions", video:"https://www.youtube.com/embed/VIDEO2?autoplay=1", aiText:"Lesson 2: Let's practice introducing ourselves."},
+{title:"درس 3: Numbers", video:"https://www.youtube.com/embed/VIDEO3?autoplay=1", aiText:"Lesson 3: Learn numbers in English."},
+// أكمل بنفس الشكل حتى 24 درس
+];
+
+let currentLesson=0;
+let courseInterval=null;
+
+function playAIAudio(text){
+  // توليد صوت AI باستخدام SpeechSynthesis API
+  const synth = window.speechSynthesis;
+  synth.cancel(); // إيقاف أي صوت سابق
+  const utterThis = new SpeechSynthesisUtterance(text);
+  utterThis.lang = 'en-US';
+  synth.speak(utterThis);
+}
+
+function showLesson(index){
+  const lesson = lessons[index];
+  document.getElementById("tvFrame").src = lesson.video;
+  document.getElementById("lessonTitle").innerText = "📖 الآن: "+lesson.title;
+  playAIAudio(lesson.aiText);
+}
+
+function nextLesson(){
+  currentLesson = (currentLesson+1)%lessons.length;
+  showLesson(currentLesson);
+}
+
+function startCourse(){
+  showLesson(currentLesson);
+  // تغيير الدرس كل 5 دقائق تلقائي (يمكن تعديل حسب طول الدرس)
+  courseInterval = setInterval(nextLesson, 300000); 
+}
+
+function stopCourse(){
+  clearInterval(courseInterval);
+  window.speechSynthesis.cancel();
+}
+</script>
