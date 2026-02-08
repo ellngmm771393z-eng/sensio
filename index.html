@@ -6,7 +6,6 @@
 <title>Sa'a | بوابتك إلى المعرفة و اللغات و الذكاء الاصطناعي</title>
 
 <style>
-/* ===== الأساسيات ===== */
 body{
 margin:0;
 font-family:Cairo, Arial, sans-serif;
@@ -58,15 +57,6 @@ margin:0 12px;
 text-decoration:none;
 color:#0b3d91;
 font-weight:bold;
-}
-
-/* ===== شريط الأخبار ===== */
-.news{
-background:#d4af37;
-color:#000;
-padding:6px;
-white-space:nowrap;
-overflow:hidden;
 }
 
 /* ===== التخطيط ===== */
@@ -157,10 +147,6 @@ user-select:none;
 <a href="#articles">المقالات</a>
 </nav>
 
-<div class="news" id="newsTicker">
-جاري تحميل الأخبار...
-</div>
-
 <div class="container">
 
 <aside>
@@ -185,8 +171,8 @@ user-select:none;
 
 <select onchange="playRadio(this.value)">
 <option value="">اختر البث</option>
-<option value="https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_vi/hls_snrt_radio/index.m3u8">إذاعة محمد السادس – المغرب</option>
-<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">بث مباشر قرآن/تعليم</option>
+<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">راديو Stream</option>
+<option value="https://virmach2.hajjam.net/">راديو المغرب</option>
 </select>
 </div>
 
@@ -194,19 +180,19 @@ user-select:none;
 <h2>المقالات</h2>
 
 <h3 id="islam">إسلاميات</h3>
-اكتب مقالاتك الدينية هنا.
+<textarea rows="6" style="width:100%;">اكتب مقالاتك الدينية هنا.</textarea>
 
 <h3 id="english">الإنجليزية</h3>
-تعليم اللغة الإنجليزية والمقالات التعليمية.
+<textarea rows="6" style="width:100%;">تعليم اللغة الإنجليزية والمقالات التعليمية.</textarea>
 
 <h3 id="german">الألمانية</h3>
-تعليم اللغة الألمانية.
+<textarea rows="6" style="width:100%;">تعليم اللغة الألمانية.</textarea>
 
 <h3 id="ai">الذكاء الاصطناعي</h3>
-مقالات وأخبار الذكاء الاصطناعي.
+<textarea rows="6" style="width:100%;">مقالات وأخبار الذكاء الاصطناعي.</textarea>
 
 <h3 id="general">المعرفة العامة</h3>
-مقالات ثقافية وعلمية متنوعة.
+<textarea rows="6" style="width:100%;">مقالات ثقافية وعلمية متنوعة.</textarea>
 
 </div>
 
@@ -226,24 +212,6 @@ r.src=url;
 r.play();
 }
 
-/* أخبار حقيقية */
-async function loadNews(){
-const rss="https://feeds.bbci.co.uk/arabic/rss.xml";
-try{
-const res=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
-const data=await res.json();
-let txt="";
-data.items.slice(0,8).forEach(n=>{
-txt+=` 📰 <a target="_blank" href="${n.link}">${n.title}</a> — `;
-});
-document.getElementById("newsTicker").innerHTML=txt;
-}catch{
-document.getElementById("newsTicker").innerText="تعذر تحميل الأخبار حالياً";
-}
-}
-
-loadNews();
-
 /* منع النسخ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.onkeydown=e=>{
@@ -254,4 +222,3 @@ if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false;
 
 </body>
 </html>
-
