@@ -254,3 +254,116 @@ if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false;
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="axia-tv">
+
+<h2>📺 Axia Smart TV</h2>
+
+<iframe id="tvFrame"></iframe>
+
+<div id="aiContent"></div>
+
+<div class="controls">
+<button onclick="startAuto()">تشغيل تلقائي</button>
+<button onclick="stopAuto()">إيقاف</button>
+<button onclick="nextChannel()">تغيير الآن</button>
+</div>
+
+</div>
+
+<style>
+.axia-tv{
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:14px;
+margin:20px 0;
+}
+
+#tvFrame{
+width:100%;
+height:65vh;
+border:none;
+border-radius:12px;
+background:#111;
+}
+
+.controls{
+text-align:center;
+margin-top:10px;
+}
+
+.controls button{
+padding:8px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1E90FF;
+color:#fff;
+cursor:pointer;
+}
+
+#aiContent{
+background:#111;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+color:gold;
+font-size:18px;
+text-align:center;
+}
+</style>
+
+<script>
+const channels=[
+"https://stream.radiojar.com/8s5u5tpdtwzuv", // قرآن
+"https://www.youtube.com/embed/21X5lGlDOfg", // علوم
+"https://www.youtube.com/embed/jfKfPfyJRdk"  // تركيز
+];
+
+let i=0, auto=null;
+
+function nextChannel(){
+document.getElementById("tvFrame").src=channels[i];
+generateAIText();
+i=(i+1)%channels.length;
+}
+
+function startAuto(){
+nextChannel();
+auto=setInterval(nextChannel,20000);
+}
+
+function stopAuto(){
+clearInterval(auto);
+}
+
+function generateAIText(){
+const texts=[
+"💡 معلومة: تعلم لغة جديدة يزيد قوة الذاكرة.",
+"🌍 هل تعلم؟ الأرض تدور بسرعة 1670 كم/س.",
+"🤖 الذكاء الاصطناعي سيغير التعليم جذريًا.",
+"📖 اقتباس: العلم نور والجهل ظلام.",
+"🧠 كلمة اليوم: Knowledge = معرفة."
+];
+document.getElementById("aiContent").innerText=
+texts[Math.floor(Math.random()*texts.length)];
+}
+</script>
