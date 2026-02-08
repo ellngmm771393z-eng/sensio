@@ -714,3 +714,158 @@ const lesson1HTML = `<div dir="rtl" style="font-family:Tahoma, Arial; line-heigh
 اسم الحرف: إي<br>
 صوت الحرف: أَ<br>
 <audio id="audioA"><source src="https://ssl.gstatic.com/dictionary/static/sounds/oxford/a--_gb_1.mp3" type="audio/mpeg"></audio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="axia-tv">
+<h2>📺 كورس الإنجليزية – الدرس 1: الحروف</h2>
+<div id="tvContent"></div>
+
+<div class="controls">
+<button onclick="prevLesson()">الدرس السابق</button>
+<button onclick="startLesson()">تشغيل الدرس</button>
+<button onclick="stopLesson()">إيقاف الدرس</button>
+<button onclick="nextLesson()">الدرس التالي</button>
+</div>
+</div>
+
+<style>
+.axia-tv{
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:14px;
+margin:20px 0;
+text-align:center;
+}
+#tvContent{
+background:#111;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+text-align:right;
+line-height:2;
+font-size:17px;
+direction:rtl;
+color:#fff;
+max-height:600px;
+overflow-y:auto;
+}
+.controls button{
+padding:8px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1E90FF;
+color:#fff;
+cursor:pointer;
+}
+.highlight{
+background: rgba(255,215,0,0.3);
+padding: 2px 4px;
+border-radius: 3px;
+}
+</style>
+
+<script>
+// ======== محتوى الدرس 1 مقسم لجمل قصيرة ========
+const lesson1Sentences = [
+"أهلاً بيك 🌟. إحنا النهارده بنحط أهم حجر أساس في تعلم الإنجليزي: الحروف وأصواتها.",
+"الحروف المتحركة هي: A – E – I – O – U وهي قلب النطق في اللغة الإنجليزية.",
+"الحرف A. اسم الحرف: إي. صوت الحرف: أَ. مثال: Apple – تفاحة.",
+"الحرف E. اسم الحرف: إي. صوت الحرف: إِ. مثال: Elephant – فيل.",
+"الحرف I. اسم الحرف: آي. صوت الحرف: إِ / آي. مثال: Ice cream – آيس كريم.",
+"الحرف O. اسم الحرف: أو. صوت الحرف: أُ / أو. مثال: Orange – برتقال.",
+"الحرف U. اسم الحرف: يو. صوت الحرف: أَ / يُ. مثال: Umbrella – مظلة.",
+"ملاحظة ذهبية: الحرف الواحد قد يكون له أكثر من صوت، وده طبيعي جدًا في اللغة الإنجليزية.",
+"تمرين بسيط: اسمع صوت الحرف، اسمع الكلمة، حاول تربط بينهم.",
+"الدرس القادم: أصوات الحروف – Phonics. هنبدأ نفهم ليه الحرف بينطق كده."
+];
+
+let currentSentence = 0;
+
+// ======== عرض النصوص ========
+function displayLesson(){
+  const container = document.getElementById("tvContent");
+  container.innerHTML = lesson1Sentences.map((s,i)=>`<p id="s${i}">${s}</p>`).join('');
+}
+
+// ======== تشغيل صوت AI بسلاسة ========
+function speakSentence(text, callback){
+  const synth = window.speechSynthesis;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ar-EG'; // ممكن تستخدم en-US للجمل الإنجليزية
+  utter.rate = 0.95; // سرعة مقاربة للصوت الطبيعي
+  utter.pitch = 1;
+  utter.onend = callback;
+  synth.speak(utter);
+}
+
+// ======== تشغيل الدرس ========
+function startLesson(){
+  displayLesson();
+  currentSentence = 0;
+  playNextSentence();
+}
+
+// ======== تمييز الجملة الحالية ========
+function playNextSentence(){
+  if(currentSentence >= lesson1Sentences.length) return;
+  // إزالة التمييز من جميع الجمل
+  lesson1Sentences.forEach((_,i)=>{
+    const p = document.getElementById(`s${i}`);
+    if(p) p.classList.remove('highlight');
+  });
+  // تمييز الجملة الحالية
+  const currentP = document.getElementById(`s${currentSentence}`);
+  if(currentP) currentP.classList.add('highlight');
+
+  speakSentence(lesson1Sentences[currentSentence], ()=>{
+    currentSentence++;
+    playNextSentence();
+  });
+}
+
+// ======== التحكم اليدوي ========
+function stopLesson(){
+  window.speechSynthesis.cancel();
+}
+
+function nextLesson(){
+  alert("سيتم تفعيل الدرس التالي هنا بعد تجهيز محتواه");
+}
+
+function prevLesson(){
+  alert("سيتم تفعيل الدرس السابق هنا بعد تجهيز محتواه");
+}
+</script>
