@@ -578,3 +578,139 @@ function stopCourse(){
   window.speechSynthesis.cancel();
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="axia-tv">
+<h2>📺 كورس الإنجليزية – الدرس 1: الحروف</h2>
+
+<div id="tvContent"></div>
+
+<div class="controls">
+<button onclick="prevLesson()">الدرس السابق</button>
+<button onclick="startLesson()">تشغيل الدرس</button>
+<button onclick="stopLesson()">إيقاف الدرس</button>
+<button onclick="nextLesson()">الدرس التالي</button>
+</div>
+</div>
+
+<style>
+.axia-tv{
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:14px;
+margin:20px 0;
+text-align:center;
+}
+#tvContent{
+background:#111;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+text-align:right;
+line-height:2;
+font-size:17px;
+direction:rtl;
+color:#fff;
+max-height:600px;
+overflow-y:auto;
+}
+.controls button{
+padding:8px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#1E90FF;
+color:#fff;
+cursor:pointer;
+}
+</style>
+
+<script>
+// ======== محتوى الدرس 1 ========
+const lesson1HTML = `<div dir="rtl" style="font-family:Tahoma, Arial; line-height:2; font-size:17px">
+<h2 style="text-align:center;">📘 الدرس الأول: الحروف الإنجليزية</h2>
+<h3 style="text-align:center;">English Alphabet – البداية الصحيحة</h3>
+<hr>
+<p><b>👋 مقدمة</b><br>
+أهلاً بيك 🌟  
+إحنا النهارده بنحط <b>أهم حجر أساس</b> في تعلم الإنجليزي:  
+<b>الحروف وأصواتها</b>.
+</p>
+<hr>
+<p><b>🅰️ الحروف المتحركة (Vowels)</b><br>
+الحروف المتحركة هي: A – E – I – O – U  
+وهي <b>قلب النطق في اللغة الإنجليزية</b>.
+</p>
+<hr>
+<p><b>🔤 الحرف: A</b><br>
+اسم الحرف: إي<br>
+صوت الحرف: أَ<br>
+<audio id="audioA"><source src="https://ssl.gstatic.com/dictionary/static/sounds/oxford/a--_gb_1.mp3" type="audio/mpeg"></audio
