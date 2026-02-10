@@ -1,139 +1,131 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>الماسة | Almasa</title><!-- Firebase (نشر المقالات + أعضاء + تعليقات أونلاين) --><script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script><style>
-body{margin:0;font-family:Cairo,Arial;background:#f5f7fa}
-header{background:linear-gradient(90deg,#0b3d91,#d4af37);color:#fff;padding:15px}
-header h1{margin:0}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الماسة | Almasa</title><style>
+body{margin:0;font-family:Cairo,Arial;background:#f5f7fa;color:#222}
+header{background:linear-gradient(90deg,#0b3d91,#d4af37);color:#fff;padding:14px 20px}
+h1{margin:0}
 
 /* الأقسام الأفقية */
-nav{
+.sections{
 display:flex;
 overflow-x:auto;
 white-space:nowrap;
 background:#fff;
+padding:10px;
 box-shadow:0 2px 6px rgba(0,0,0,.1);
+scrollbar-width:thin;
 }
-nav a{
-padding:12px 18px;
-text-decoration:none;
-color:#0b3d91;
-font-weight:bold;
+.sections a{
 flex:0 0 auto;
+margin:0 8px;
+padding:8px 16px;
+background:#eee;
+border-radius:20px;
+text-decoration:none;
+color:#000;
+font-weight:bold;
 }
-nav a:hover{background:#eee}
+.sections a:hover{background:#d4af37;color:#000}
+
+/* مؤشر السكرول */
+.sections::-webkit-scrollbar{height:6px}
+.sections::-webkit-scrollbar-thumb{background:#0b3d91;border-radius:10px}
 
 .container{padding:20px}
-.card{background:#fff;padding:20px;margin-bottom:20px;border-radius:12px}
-textarea{width:100%;height:150px}
-button{padding:8px 15px;margin:6px;background:#0b3d91;color:#fff;border:0;border-radius:6px}
-button:hover{background:#d4af37}
-footer{background:#0b3d91;color:#fff;text-align:center;padding:10px}
+.card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:20px}
+textarea{width:100%;height:120px;margin-top:10px}
+button{padding:8px 14px;margin:6px;border:none;border-radius:8px;cursor:pointer}
+.primary{background:#0b3d91;color:#fff}
+.danger{background:#c0392b;color:#fff}
+.success{background:#27ae60;color:#fff}
+
+audio{width:100%;margin-top:10px}
+
+footer{background:#0b3d91;color:#fff;text-align:center;padding:12px;margin-top:30px}
 </style></head>
 <body><header>
 <h1>الماسة | Almasa</h1>
-<p>بوابتك إلى المعرفة واللغات والذكاء الاصطناعي</p>
-</header><!-- الأقسام الأفقية مع الرئيسية أولاً --><nav>
+<div>بوابتك إلى المعرفة واللغات والذكاء الاصطناعي</div>
+</header><div class="sections">
 <a href="#home">الرئيسية</a>
 <a href="#islam">إسلاميات</a>
 <a href="#english">الإنجليزية</a>
 <a href="#german">الألمانية</a>
 <a href="#ai">الذكاء الاصطناعي</a>
 <a href="#general">المعرفة العامة</a>
-</nav><div class="container"><div class="card" id="home">
-<h2>مرحباً بك</h2>
-<p>منصة معرفية شاملة للغات والذكاء الاصطناعي والمعرفة العامة.</p>
-</div><div class="card">
-<h2>تسجيل الدخول / إنشاء حساب</h2>
-<input id="email" placeholder="الإيميل" />
-<input id="pass" type="password" placeholder="كلمة المرور" />
+<a href="#radio">القرآن الكريم</a>
+</div><div class="container"><div class="card" id="auth">
+<h2>تسجيل الأعضاء</h2>
+<input id="user" placeholder="اسم المستخدم"><br><br>
+<input id="pass" type="password" placeholder="كلمة المرور"><br>
+<button class="primary" onclick="register()">تسجيل جديد</button>
+<button class="success" onclick="login()">تسجيل دخول</button>
+<button class="danger" onclick="logout()">تسجيل خروج</button>
+<div id="authMsg"></div>
+</div><div class="card" id="radio">
+<h2>📻 راديو القرآن الكريم</h2>
+<audio id="quran" controls></audio>
+<select onchange="playRadio(this.value)">
+<option value="">اختر البث</option>
+<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">راديو Stream</option>
+<option value="https://virmach2.hajjam.net/">راديو المغرب</option>
+</select>
+</div><div class="card" id="editor">
+<h2>كتابة مقال</h2>
+<textarea id="post"></textarea>
 <br>
-<button onclick="signup()">تسجيل جديد</button>
-<button onclick="login()">دخول</button>
-<button onclick="logout()">خروج</button>
-<p id="user"></p>
-</div><div class="card">
-<h2>نشر مقال</h2>
-<textarea id="article"></textarea><br>
-<button onclick="publish()">نشر المقال</button>
-</div><div class="card">
-<h2>المقالات المنشورة</h2>
+<button class="primary" onclick="publish()">نشر المقال</button>
 <div id="posts"></div>
-</div></div><footer>
-© 2026 Almasa
-</footer><script>
-/* إعداد Firebase — ضع بيانات مشروعك */
-const firebaseConfig={
-apiKey:"PUT_KEY",
-authDomain:"PUT_DOMAIN",
-projectId:"PUT_PROJECT"
-};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const db=firebase.firestore();
+</div></div><footer>© 2026 Almasa</footer><script>
 
-/* عضويات */
-function signup(){auth.createUserWithEmailAndPassword(email.value,pass.value)}
-function login(){auth.signInWithEmailAndPassword(email.value,pass.value)}
-function logout(){auth.signOut()}
+function playRadio(u){
+let r=document.getElementById('quran');
+r.src=u;
+r.play();
+}
 
-auth.onAuthStateChanged(u=>{
-user.innerText=u?"مسجل: "+u.email:"غير مسجل";
-});
+/* ===== نظام أعضاء محلي ===== */
+function register(){
+let u=user.value,p=pass.value;
+localStorage.setItem('user',u);
+localStorage.setItem('pass',p);
+authMsg.innerText='تم التسجيل';
+}
 
-/* نشر مقال */
+function login(){
+if(user.value==localStorage.user && pass.value==localStorage.pass)
+authMsg.innerText='تم تسجيل الدخول';
+else authMsg.innerText='بيانات غير صحيحة';
+}
+
+function logout(){authMsg.innerText='تم تسجيل الخروج'}
+
+/* ===== مقالات ===== */
 function publish(){
-const text=article.value;
-if(!auth.currentUser)return alert("سجل دخول أولاً");
-
-db.collection("posts").add({
-text,
-user:auth.currentUser.email,
-date:Date.now()
-});
-article.value="";
+let t=post.value;
+if(!t)return;
+let id=Date.now();
+let html=`<div class='card' id='p${id}'>${t}<br>
+<button onclick="edit(${id})">تعديل</button>
+<button onclick="del(${id})">حذف</button>
+<button onclick="share('${t}')">مشاركة</button></div>`;
+posts.innerHTML+=html;
+post.value='';
 }
 
-/* عرض المقالات + تعديل + حذف + مشاركة + تعليقات */
-db.collection("posts").orderBy("date","desc").onSnapshot(s=>{
-posts.innerHTML="";
-s.forEach(doc=>{
-const p=doc.data();
-const d=document.createElement("div");
-d.className="card";
-
-d.innerHTML=`
-<p>${p.text}</p>
-<small>${p.user}</small><br>
-<button onclick="editPost('${doc.id}','${p.text}')">تعديل</button>
-<button onclick="deletePost('${doc.id}')">حذف</button>
-<button onclick="sharePost('${p.text}')">مشاركة</button>
-
-<h4>تعليق:</h4>
-<input id="c${doc.id}" placeholder="اكتب تعليق" />
-<button onclick="comment('${doc.id}')">إرسال</button>
-<div id="comments${doc.id}"></div>
-`;
-
-posts.appendChild(d);
-});
-});
-
-function deletePost(id){db.collection("posts").doc(id).delete()}
-
-function editPost(id,text){
-const t=prompt("تعديل المقال",text);
-if(t)db.collection("posts").doc(id).update({text:t});
+function edit(id){
+let el=document.querySelector('#p'+id);
+let txt=prompt('تعديل المقال',el.firstChild.textContent);
+if(txt)el.firstChild.textContent=txt;
 }
 
-function sharePost(text){
-navigator.share?.({text})||alert(text);
+function del(id){document.querySelector('#p'+id).remove();}
+
+function share(t){
+navigator.share?navigator.share({text:t}):alert('المشاركة غير مدعومة');
 }
 
-function comment(id){
-const t=document.getElementById("c"+id).value;
-db.collection("posts").doc(id).collection("comments").add({text:t});
-}
 </script></body>
 </html>
