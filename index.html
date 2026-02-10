@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الماسة | Almasa</title>
-
-<style>
-body{
-margin:0;
-font-family:Cairo, Arial, sans-serif;
-background:#f5f7fa;
-color:#222;
-}
+<title>الماسة | Almasa</title><style>
+body{margin:0;font-family:Cairo,Arial,sans-serif;background:#f5f7fa;color:#222}
 
 /* ===== الهيدر ===== */
 header{
@@ -24,35 +16,18 @@ justify-content:space-between;
 box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-}
+header h1{margin:0;font-size:26px}
+.tagline{font-size:13px;opacity:.9}
 
-.logo img{
-height:45px;
-}
-
-header h1{
-margin:0;
-font-size:26px;
-}
-
-.tagline{
-font-size:13px;
-opacity:.9;
-}
-
-/* ===== الأقسام الأفقية ===== */
+/* ===== الأقسام الأفقية لا تتجاوز الشاشة ===== */
 nav{
 background:white;
 padding:10px;
-text-align:center;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
 display:flex;
-justify-content:center;
-gap:20px;
+gap:10px;
+overflow-x:auto;
+white-space:nowrap;
+box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
 nav a{
@@ -61,19 +36,13 @@ color:#0b3d91;
 font-weight:bold;
 padding:6px 12px;
 border-radius:6px;
-transition:0.3s;
+flex:0 0 auto;
 }
 
-nav a:hover{
-background:#eee;
-}
+nav a:hover{background:#eee}
 
-/* ===== التخطيط ===== */
-.container{
-padding:15px;
-}
+.container{padding:15px}
 
-/* ===== كروت المحتوى ===== */
 .card{
 background:white;
 padding:20px;
@@ -82,184 +51,150 @@ border-radius:12px;
 box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
-/* ===== الراديو ===== */
-audio{
-width:100%;
-margin-top:10px;
-}
+audio,select,textarea{width:100%}
+textarea{height:150px;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc}
 
-select{
-padding:8px;
-width:100%;
-margin-top:10px;
-}
-
-/* ===== المقالات ===== */
-textarea{
-width:100%;
-height:150px;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-margin-top:10px;
-}
-
-/* ===== زر الإرسال ===== */
 button{
-padding:8px 14px;
-margin-top:10px;
-background:#0b3d91;
-color:white;
+padding:7px 14px;
+margin-top:8px;
 border:none;
 border-radius:6px;
 cursor:pointer;
+background:#0b3d91;color:white
 }
+button:hover{background:#d4af37}
 
-button:hover{
-background:#d4af37;
-}
-
-/* ===== عرض المقالات ===== */
 .posted-article{
-border:1px solid #ccc;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-background:#f9f9f9;
-}
-
-/* ===== الفوتر ===== */
-footer{
-background:#0b3d91;
-color:white;
-text-align:center;
+border:1px solid #ddd;
 padding:12px;
-margin-top:25px;
+margin-top:10px;
+border-radius:8px;
+background:#fafafa
 }
 
-/* منع النسخ */
-body{
-user-select:none;
-}
-</style>
-</head>
-<body>
+.actions button{margin:5px 5px 0 0}
 
-<header>
-<div class="logo">
-<img src="logo.png" alt="Almasa Logo">
+footer{
+background:#0b3d91;color:white;text-align:center;
+padding:12px;margin-top:25px
+}
+
+body{user-select:none}
+</style></head>
+<body><header>
 <div>
 <h1>الماسة | Almasa</h1>
 <div class="tagline">بوابتك إلى المعرفة و اللغات و الذكاء الاصطناعي</div>
 </div>
-</div>
-</header>
-
-<!-- الأقسام أفقية -->
-<nav>
+</header><nav>
 <a href="#" onclick="openSection('islam')">إسلاميات</a>
 <a href="#" onclick="openSection('english')">الإنجليزية</a>
 <a href="#" onclick="openSection('german')">الألمانية</a>
 <a href="#" onclick="openSection('ai')">الذكاء الاصطناعي</a>
 <a href="#" onclick="openSection('general')">المعرفة العامة</a>
-</nav>
-
-<div class="container" id="mainContainer">
-
-<div class="card" id="homeCard">
+</nav><div class="container"><div class="card" id="homeCard">
 <h2>مرحباً بك في Almasa</h2>
-<p>موسوعة معرفية شاملة لتعليم اللغات، الذكاء الاصطناعي، والمعرفة العامة.</p>
-</div>
-
-<div class="card" id="quranCard">
-<h2>📻 راديو / صوتيات تعليمية</h2>
+<p>موسوعة معرفية شاملة لتعليم اللغات والذكاء الاصطناعي والمعرفة العامة.</p>
+</div><div class="card" id="radioCard">
+<h2>📻 راديو تعليمي</h2>
 <audio id="radio" controls></audio>
-
 <select onchange="playRadio(this.value)">
 <option value="">اختر البث</option>
 <option value="https://stream.radiojar.com/0tpy1h0kxtzuv">راديو Stream</option>
 <option value="https://virmach2.hajjam.net/">راديو المغرب</option>
 </select>
-</div>
-
-<!-- قسم المقالات الديناميكي -->
-<div class="card" id="sectionCard" style="display:none;">
-<h2 id="sectionTitle">القسم</h2>
-<textarea id="articleText" placeholder="اكتب مقالك هنا..."></textarea>
-<br>
+</div><div class="card" id="sectionCard" style="display:none">
+<h2 id="sectionTitle"></h2>
+<textarea id="articleText" placeholder="اكتب المقال هنا..."></textarea>
 <button onclick="submitArticle()">إرسال المقال</button>
-
 <div id="postedArticles"></div>
-</div>
-
-</div>
-
-<footer>
-© 2026 Almasa — جميع الحقوق محفوظة
-</footer>
-
-<script>
-/* تشغيل الراديو */
+</div></div><footer>© 2026 Almasa — جميع الحقوق محفوظة</footer><script>
 function playRadio(url){
 const r=document.getElementById("radio");
-r.src=url;
-r.play();
+r.src=url;r.play();
+}
+
+const sections=["islam","english","german","ai","general"];
+let currentSection="";
+
+function openSection(section){
+if(!sections.includes(section))return;
+currentSection=section;
+document.getElementById("homeCard").style.display="none";
+document.getElementById("radioCard").style.display="none";
+document.getElementById("sectionCard").style.display="block";
+document.getElementById("sectionTitle").innerText=section;
+loadArticles();
+}
+
+function loadArticles(){
+const key="articles_"+currentSection;
+const arr=JSON.parse(localStorage.getItem(key)||"[]");
+const div=document.getElementById("postedArticles");
+div.innerHTML="";
+arr.forEach(a=>renderArticle(a));
+}
+
+function submitArticle(){
+const txt=document.getElementById("articleText").value.trim();
+if(!txt)return;
+const key="articles_"+currentSection;
+const arr=JSON.parse(localStorage.getItem(key)||"[]");
+const article={id:Date.now(),text:txt};
+arr.push(article);
+localStorage.setItem(key,JSON.stringify(arr));
+document.getElementById("articleText").value="";
+renderArticle(article);
+}
+
+function renderArticle(article){
+const div=document.createElement("div");
+div.className="posted-article";
+div.id="a"+article.id;
+div.innerHTML=`<div>${article.text}</div>
+<div class="actions">
+<button onclick="editArticle(${article.id})">تعديل</button>
+<button onclick="deleteArticle(${article.id})">حذف</button>
+<button onclick="shareArticle(${article.id})">مشاركة</button>
+</div>`;
+document.getElementById("postedArticles").appendChild(div);
+}
+
+function editArticle(id){
+const key="articles_"+currentSection;
+let arr=JSON.parse(localStorage.getItem(key)||"[]");
+const art=arr.find(a=>a.id===id);
+if(!art)return;
+const newText=prompt("تعديل المقال:",art.text);
+if(!newText)return;
+art.text=newText;
+localStorage.setItem(key,JSON.stringify(arr));
+loadArticles();
+}
+
+function deleteArticle(id){
+const key="articles_"+currentSection;
+let arr=JSON.parse(localStorage.getItem(key)||"[]");
+arr=arr.filter(a=>a.id!==id);
+localStorage.setItem(key,JSON.stringify(arr));
+loadArticles();
+}
+
+function shareArticle(id){
+const key="articles_"+currentSection;
+const arr=JSON.parse(localStorage.getItem(key)||"[]");
+const art=arr.find(a=>a.id===id);
+if(!art)return;
+if(navigator.share){
+navigator.share({title:"مقال من موقع الماسة",text:art.text,url:location.href});
+}else{
+const url="https://wa.me/?text="+encodeURIComponent(art.text);
+window.open(url,"_blank");
+}
 }
 
 /* منع النسخ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
-document.onkeydown=e=>{
-if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false;
-};
-
-/* ===== الأقسام الديناميكية ===== */
-const sections = ["islam","english","german","ai","general"];
-
-function openSection(section){
-  if(!sections.includes(section)) return;
-
-  // إخفاء البطاقات الأخرى
-  document.getElementById("homeCard").style.display="none";
-  document.getElementById("quranCard").style.display="none";
-  document.getElementById("sectionCard").style.display="block";
-
-  // عرض اسم القسم
-  document.getElementById("sectionTitle").innerText = section;
-
-  // تحميل المقالات السابقة من LocalStorage
-  const stored = JSON.parse(localStorage.getItem("articles_"+section) || "[]");
-  const postedDiv = document.getElementById("postedArticles");
-  postedDiv.innerHTML = "";
-  stored.forEach(text=>{
-    const div=document.createElement("div");
-    div.className="posted-article";
-    div.innerText=text;
-    postedDiv.appendChild(div);
-  });
-}
-
-// إرسال مقال وحفظه محلياً
-function submitArticle(){
-  const section = document.getElementById("sectionTitle").innerText;
-  const text = document.getElementById("articleText").value.trim();
-  if(text==="") return;
-
-  // حفظ في LocalStorage
-  const key = "articles_" + section;
-  const arr = JSON.parse(localStorage.getItem(key) || "[]");
-  arr.push(text);
-  localStorage.setItem(key, JSON.stringify(arr));
-
-  // عرض المقال فوراً
-  const div = document.createElement("div");
-  div.className = "posted-article";
-  div.innerText = text;
-  document.getElementById("postedArticles").appendChild(div);
-
-  // مسح حقل الكتابة
-  document.getElementById("articleText").value = "";
-}
-</script>
-
-</body>
+document.onkeydown=e=>{if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false};
+</script></body>
 </html>
