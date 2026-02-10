@@ -1,130 +1,121 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الماسة | Almasa</title><style>
-body{margin:0;font-family:Cairo,Arial;background:#f5f7fa;color:#222}
-header{background:linear-gradient(90deg,#0b3d91,#d4af37);color:#fff;padding:14px 20px}
-h1{margin:0}
+<title>الماسة | Almasa</title>
+<style>
+body{font-family:tahoma;direction:rtl;margin:0;background:#f5f5f5}
+header{background:#222;color:#fff;text-align:center;padding:15px}
+nav{display:flex;gap:10px;overflow:auto;background:#eee;padding:10px;justify-content:center}
+nav button{padding:8px 14px;border:0;border-radius:6px;background:#ddd;cursor:pointer}
+nav button:hover{background:#ccc}
+#content{max-width:900px;margin:auto;padding:20px}
+.article{background:#fff;padding:15px;border-radius:10px;margin:10px 0;cursor:pointer}
+.article h3{margin:0;color:#222}
+.actions{margin-top:5px}
+.actions button{margin:3px;padding:4px 8px}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center}
+.modal-content{background:#fff;padding:20px;border-radius:10px;max-width:600px;width:90%;max-height:80%;overflow:auto;position:relative}
+.modal-close{position:absolute;top:10px;right:15px;cursor:pointer;font-weight:bold;font-size:18px}
+.copy-btn{margin-left:5px}
+</style>
+</head>
+<body>
 
-/* الأقسام الأفقية */
-.sections{
-display:flex;
-overflow-x:auto;
-white-space:nowrap;
-background:#fff;
-padding:10px;
-box-shadow:0 2px 6px rgba(0,0,0,.1);
-scrollbar-width:thin;
-}
-.sections a{
-flex:0 0 auto;
-margin:0 8px;
-padding:8px 16px;
-background:#eee;
-border-radius:20px;
-text-decoration:none;
-color:#000;
-font-weight:bold;
-}
-.sections a:hover{background:#d4af37;color:#000}
-
-/* مؤشر السكرول */
-.sections::-webkit-scrollbar{height:6px}
-.sections::-webkit-scrollbar-thumb{background:#0b3d91;border-radius:10px}
-
-.container{padding:20px}
-.card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-bottom:20px}
-textarea{width:100%;height:120px;margin-top:10px}
-button{padding:8px 14px;margin:6px;border:none;border-radius:8px;cursor:pointer}
-.primary{background:#0b3d91;color:#fff}
-.danger{background:#c0392b;color:#fff}
-.success{background:#27ae60;color:#fff}
-
-audio{width:100%;margin-top:10px}
-
-footer{background:#0b3d91;color:#fff;text-align:center;padding:12px;margin-top:30px}
-</style></head>
-<body><header>
+<header>
 <h1>الماسة | Almasa</h1>
-<div>بوابتك إلى المعرفة واللغات والذكاء الاصطناعي</div>
-</header><div class="sections">
-<a href="#home">الرئيسية</a>
-<a href="#islam">إسلاميات</a>
-<a href="#english">الإنجليزية</a>
-<a href="#german">الألمانية</a>
-<a href="#ai">الذكاء الاصطناعي</a>
-<a href="#general">المعرفة العامة</a>
-</div><div class="container"><div class="card" id="auth">
-<h2>تسجيل الأعضاء</h2>
-<input id="user" placeholder="اسم المستخدم"><br><br>
-<input id="pass" type="password" placeholder="كلمة المرور"><br>
-<button class="primary" onclick="register()">تسجيل جديد</button>
-<button class="success" onclick="login()">تسجيل دخول</button>
-<button class="danger" onclick="logout()">تسجيل خروج</button>
-<div id="authMsg"></div>
-</div><div class="card" id="radio">
-<h2>📻 راديو القرآن الكريم</h2>
-<audio id="quran" controls></audio>
-<select onchange="playRadio(this.value)">
-<option value="">اختر البث</option>
-<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">راديو Stream</option>
-<option value="https://virmach2.hajjam.net/">راديو المغرب</option>
-</select>
-</div><div class="card" id="editor">
-<h2>كتابة مقال</h2>
-<textarea id="post"></textarea>
-<br>
-<button class="primary" onclick="publish()">نشر المقال</button>
-<div id="posts"></div>
-</div></div><footer>© 2026 Almasa</footer><script>
+<p>مدونة إسلاميات، لغات، ذكاء إصطناعي ومعرفة عامة - جميع المقالات جاهزة للزوار</p>
+</header>
 
-function playRadio(u){
-let r=document.getElementById('quran');
-r.src=u;
-r.play();
+<nav>
+<button onclick="showSection('islam')">إسلاميات</button>
+<button onclick="showSection('english')">الإنجليزية</button>
+<button onclick="showSection('german')">الألمانية</button>
+<button onclick="showSection('ai')">الذكاء الإصطناعي</button>
+<button onclick="showSection('general')">المعرفة العامة</button>
+</nav>
+
+<div id="content"><h2>اختر قسم لعرض المقالات</h2></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">×</span>
+    <h2 id="modal-title"></h2>
+    <p id="modal-text"></p>
+    <div class="actions">
+      <button onclick="shareModal()">مشاركة</button>
+      <button class="copy-btn" onclick="copyLink()">نسخ الرابط</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// البيانات والمقالات لكل قسم فعلي
+let sections = {
+  islam:[
+    {title:"فضل العلم في الإسلام", content:"العلم له مكانة عظيمة في الإسلام، فقد نزل أول ما في القرآن الكريم \"اقرأ\"..."},
+    {title:"أهمية الصلاة", content:"الصلاة ركن أساسي من أركان الإسلام وتؤثر على حياة المسلم اليومية..."}
+  ],
+  english:[
+    {title:"تعلم الإنجليزية بسهولة", content:"طرق تعلم الإنجليزية للمبتدئين والمحترفين مع نصائح عملية..."}
+  ],
+  german:[
+    {title:"أساسيات الألمانية", content:"مقدمة لتعلم اللغة الألمانية وقواعدها الأساسية..."}
+  ],
+  ai:[
+    {title:"مقدمة في الذكاء الإصطناعي", content:"الذكاء الاصطناعي هو فرع من علوم الحاسوب يركز على تطوير أنظمة ذكية..."}
+  ],
+  general:[
+    {title:"حقائق ممتعة", content:"مقالات متنوعة في المعرفة العامة لتوسيع مدارك القارئ..."}
+  ]
+};
+
+// عرض القسم
+function showSection(section){
+  const content=document.getElementById('content');
+  content.innerHTML=`<h2>قسم ${section}</h2>`;
+  sections[section].forEach((article,i)=>{
+    const div=document.createElement('div');
+    div.className='article';
+    div.innerHTML=`<h3>${article.title}</h3>`;
+    div.onclick=()=>openModal(section,i);
+    content.appendChild(div);
+  });
 }
 
-/* ===== نظام أعضاء محلي ===== */
-function register(){
-let u=user.value,p=pass.value;
-localStorage.setItem('user',u);
-localStorage.setItem('pass',p);
-authMsg.innerText='تم التسجيل';
+// فتح المقال في Modal
+function openModal(section,i){
+  const modal=document.getElementById('modal');
+  const title=document.getElementById('modal-title');
+  const text=document.getElementById('modal-text');
+  let article=sections[section][i];
+  title.innerText=article.title;
+  text.innerText=article.content;
+  modal.style.display='flex';
+  modal.dataset.section=section;
+  modal.dataset.index=i;
 }
 
-function login(){
-if(user.value==localStorage.user && pass.value==localStorage.pass)
-authMsg.innerText='تم تسجيل الدخول';
-else authMsg.innerText='بيانات غير صحيحة';
+function closeModal(){document.getElementById('modal').style.display='none';}
+
+// مشاركة المقال الحالي من Modal
+function shareModal(){
+  const modal=document.getElementById('modal');
+  const s=modal.dataset.section;
+  const i=modal.dataset.index;
+  const article=sections[s][i];
+  const url=encodeURIComponent(location.href);
+  const text=encodeURIComponent(article.title + " - " + article.content);
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url + '&quote=' + text);
 }
 
-function logout(){authMsg.innerText='تم تسجيل الخروج'}
-
-/* ===== مقالات ===== */
-function publish(){
-let t=post.value;
-if(!t)return;
-let id=Date.now();
-let html=`<div class='card' id='p${id}'>${t}<br>
-<button onclick="edit(${id})">تعديل</button>
-<button onclick="del(${id})">حذف</button>
-<button onclick="share('${t}')">مشاركة</button></div>`;
-posts.innerHTML+=html;
-post.value='';
+// نسخ رابط المقال
+function copyLink(){
+  navigator.clipboard.writeText(location.href).then(()=>alert('تم نسخ رابط الصفحة!'));
 }
+</script>
 
-function edit(id){
-let el=document.querySelector('#p'+id);
-let txt=prompt('تعديل المقال',el.firstChild.textContent);
-if(txt)el.firstChild.textContent=txt;
-}
-
-function del(id){document.querySelector('#p'+id).remove();}
-
-function share(t){
-navigator.share?navigator.share({text:t}):alert('المشاركة غير مدعومة');
-}
-
-</script></body>
+</body>
 </html>
