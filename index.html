@@ -3,256 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sa'a | بوابتك إلى المعرفة و اللغات و الذكاء الاصطناعي</title>
-
-<style>
-body{
-margin:0;
-font-family:Cairo, Arial, sans-serif;
-background:#f5f7fa;
-color:#222;
-}
-
-/* ===== الهيدر ===== */
-header{
-background:linear-gradient(90deg,#0b3d91,#d4af37);
-color:white;
-padding:12px 25px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.logo img{
-height:45px;
-}
-
-header h1{
-margin:0;
-font-size:26px;
-}
-
-.tagline{
-font-size:13px;
-opacity:.9;
-}
-
-/* ===== القائمة ===== */
-nav{
-background:white;
-padding:10px;
-text-align:center;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-nav a{
-margin:0 12px;
-text-decoration:none;
-color:#0b3d91;
-font-weight:bold;
-}
-
-/* ===== التخطيط ===== */
-.container{
-display:flex;
-flex-wrap:wrap;
-padding:15px;
-gap:20px;
-}
-
-aside{
-flex:1;
-min-width:220px;
-background:white;
-padding:15px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-aside a{
-display:block;
-padding:8px;
-text-decoration:none;
-color:#333;
-border-radius:6px;
-}
-
-aside a:hover{
-background:#eee;
-}
-
-main{
-flex:3;
-min-width:300px;
-}
-
-/* ===== كروت المحتوى ===== */
-.card{
-background:white;
-padding:20px;
-margin-bottom:20px;
-border-radius:12px;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-/* ===== الراديو ===== */
-audio{
-width:100%;
-margin-top:10px;
-}
-
-select{
-padding:8px;
-width:100%;
-margin-top:10px;
-}
-
-/* ===== الفوتر ===== */
-footer{
-background:#0b3d91;
-color:white;
-text-align:center;
-padding:12px;
-margin-top:25px;
-}
-
-/* منع النسخ */
-body{
-user-select:none;
-}
-</style>
-</head>
-<body>
-
-<header>
-<div class="logo">
-<img src="logo.png" alt="Sa'a Logo">
-<div>
-<h1>Sa'a</h1>
-<div class="tagline">بوابتك إلى المعرفة و اللغات و الذكاء الاصطناعي</div>
-</div>
-</div>
-</header>
-
-<nav>
-<a href="#">الرئيسية</a>
-<a href="#quran">القرآن</a>
-<a href="#articles">المقالات</a>
-</nav>
-
-<div class="container">
-
-<aside>
-<h3>الأقسام</h3>
-<a href="#islam">إسلاميات</a>
-<a href="#english">الإنجليزية</a>
-<a href="#german">الألمانية</a>
-<a href="#ai">الذكاء الاصطناعي</a>
-<a href="#general">المعرفة العامة</a>
-</aside>
-
-<main>
-
-<div class="card">
-<h2>مرحباً بك في Sa'a</h2>
-موسوعة معرفية شاملة لتعليم اللغات، الذكاء الاصطناعي، والمعرفة العامة.
-</div>
-
-<div class="card" id="quran">
-<h2>📻 راديو / صوتيات تعليمية</h2>
-<audio id="radio" controls></audio>
-
-<select onchange="playRadio(this.value)">
-<option value="">اختر البث</option>
-<option value="https://stream.radiojar.com/0tpy1h0kxtzuv">راديو Stream</option>
-<option value="https://virmach2.hajjam.net/">راديو المغرب</option>
-</select>
-</div>
-
-<div class="card" id="articles">
-<h2>المقالات</h2>
-
-<h3 id="islam">إسلاميات</h3>
-<textarea rows="6" style="width:100%;">اكتب مقالاتك الدينية هنا.</textarea>
-
-<h3 id="english">الإنجليزية</h3>
-<textarea rows="6" style="width:100%;">تعليم اللغة الإنجليزية والمقالات التعليمية.</textarea>
-
-<h3 id="german">الألمانية</h3>
-<textarea rows="6" style="width:100%;">تعليم اللغة الألمانية.</textarea>
-
-<h3 id="ai">الذكاء الاصطناعي</h3>
-<textarea rows="6" style="width:100%;">مقالات وأخبار الذكاء الاصطناعي.</textarea>
-
-<h3 id="general">المعرفة العامة</h3>
-<textarea rows="6" style="width:100%;">مقالات ثقافية وعلمية متنوعة.</textarea>
-
-</div>
-
-</main>
-</div>
-
-<footer>
-© 2026 Sa'a — جميع الحقوق محفوظة
-</footer>
-
-<script>
-
-/* تشغيل الراديو */
-function playRadio(url){
-const r=document.getElementById("radio");
-r.src=url;
-r.play();
-}
-
-/* منع النسخ */
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.onkeydown=e=>{
-if(e.ctrlKey&&(e.key=='c'||e.key=='u'||e.key=='s'))return false;
-};
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الماسة | Almasa</title>
 
 <style>
