@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: ellngmm771393z-eng/sensio
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "المقالات"
+    folder: "posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "العنوان", name: "title", widget: "string" }
+      - { label: "تاريخ النشر", name: "date", widget: "datetime" }
+      - { label: "صورة المقال", name: "thumbnail", widget: "image", required: false }
+      - { label: "المحتوى", name: "body", widget: "markdown" }
