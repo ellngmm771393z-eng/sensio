@@ -2,15 +2,20 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Sensio CMS المتكامل</title>
+<title>الماسة | Almasa - لوحة التحكم</title>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 body {font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0;}
 header {background: linear-gradient(90deg,#007bff,#ffd700,#ff0000,#daa520,#c0c0c0); padding:20px; color:white; text-align:center;}
-.container {max-width:1000px; margin:auto; padding:20px;}
+.container {max-width:1200px; margin:auto; padding:20px;}
 input, textarea, select {width:100%; margin:5px 0; padding:10px; border-radius:5px; border:1px solid #ccc;}
 button {padding:10px 20px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;}
 button:hover {background:#0056b3;}
@@ -24,25 +29,41 @@ button:hover {background:#0056b3;}
 .progress-bar {height:20px; background:#007bff; text-align:center; color:white; border-radius:5px; margin-top:5px;}
 .search-container {margin:20px 0;}
 .search-container input {width:50%; display:inline-block;}
+.radio-container {margin:20px 0; padding:10px; background:#fff3cd; border-radius:5px;}
+.stats {margin-top:5px; font-size:0.9em; color:#555;}
+.sections {display:flex; justify-content:center; flex-wrap:wrap; margin:20px 0;}
+.sections button {margin:5px; background:#17a2b8; color:white;}
+.sections button:hover {background:#117a8b;}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Sensio - لوحة إدارة المقالات المتكاملة</h1>
+<h1>الماسة | Almasa - لوحة التحكم المتكاملة</h1>
 </header>
+
+<!-- الأقسام الأفقية أسفل الصفحة -->
+<div class="sections">
+  <button onclick="window.location.href='index.html'">الرئيسية</button>
+  <button onclick="filterBySection('إسلاميات')">إسلاميات</button>
+  <button onclick="filterBySection('الإنجليزية')">الإنجليزية</button>
+  <button onclick="filterBySection('الألمانية')">الألمانية</button>
+  <button onclick="filterBySection('الذكاء الإصطناعي')">الذكاء الإصطناعي</button>
+  <button onclick="filterBySection('المعرفة العامة')">المعرفة العامة</button>
+</div>
 
 <div class="container">
 
-<h2>✍️ كتابة مقال جديد</h2>
+<h2>✍️ إنشاء / تعديل مقال</h2>
 <input id="title" placeholder="عنوان المقال">
 <textarea id="content" rows="6" placeholder="اكتب المقال هنا"></textarea>
 
 <select id="category">
-<option value="عام">عام</option>
-<option value="أخبار">أخبار</option>
-<option value="صوتيات">صوتيات</option>
-<option value="فيديو">فيديو</option>
+  <option value="إسلاميات">إسلاميات</option>
+  <option value="الإنجليزية">الإنجليزية</option>
+  <option value="الألمانية">الألمانية</option>
+  <option value="الذكاء الإصطناعي">الذكاء الإصطناعي</option>
+  <option value="المعرفة العامة">المعرفة العامة</option>
 </select>
 
 <input type="file" id="image" accept="image/*">
@@ -55,12 +76,35 @@ button:hover {background:#0056b3;}
 
 <hr>
 
+<div class="radio-container">
+<h3>📻 اختر الراديو</h3>
+<select id="radioSelect" onchange="changeRadio()">
+<option value="stream">راديو stream للقرآن الكريم</option>
+<option value="morocco">راديو المغرب للقرآن الكريم</option>
+</select>
+<audio id="radioPlayer" controls>
+  <source id="radioSource" src="https://stream-url-example.com/stream.mp3" type="audio/mpeg">
+  المتصفح الخاص بك لا يدعم تشغيل الصوت.
+</audio>
+</div>
+
 <div class="search-container">
 <input type="text" id="search" placeholder="بحث في المقالات..." oninput="filterPosts()">
+<select id="filterCategory" onchange="filterPosts()">
+<option value="">كل الأقسام</option>
+<option value="إسلاميات">إسلاميات</option>
+<option value="الإنجليزية">الإنجليزية</option>
+<option value="الألمانية">الألمانية</option>
+<option value="الذكاء الإصطناعي">الذكاء الإصطناعي</option>
+<option value="المعرفة العامة">المعرفة العامة</option>
+</select>
 </div>
 
 <h2>📚 المقالات المنشورة</h2>
 <div id="posts"></div>
+
+<h2>📊 إحصائيات المقالات</h2>
+<canvas id="viewsChart" width="400" height="150"></canvas>
 
 </div>
 
@@ -81,14 +125,12 @@ const storage = firebase.storage();
 
 // --- نشر المقال ---
 let currentEditId = null;
-
 async function publish(editId=null){
   const title = document.getElementById("title").value.trim();
   const content = document.getElementById("content").value.trim();
   const category = document.getElementById("category").value;
   const imageFile = document.getElementById("image").files[0];
   const videoFile = document.getElementById("videoFile").files[0];
-
   if(!title || !content) return alert("اكتب العنوان والمقال");
 
   let imageUrl = "", videoUrl = "";
@@ -122,7 +164,7 @@ async function publish(editId=null){
   if(editId){
     await db.collection("posts").doc(editId).update({title, content, category, image:imageUrl, video:videoUrl, date:new Date().toLocaleString()});
   } else {
-    await db.collection("posts").add({title, content, category, image:imageUrl, video:videoUrl, date:new Date().toLocaleString()});
+    await db.collection("posts").add({title, content, category, image:imageUrl, video:videoUrl, date:new Date().toLocaleString(), views:0});
   }
 
   document.getElementById("title").value="";
@@ -134,19 +176,23 @@ async function publish(editId=null){
   loadPosts();
 }
 
-// --- عرض المقالات ---
+// --- عرض المقالات وإحصائيات ---
 let allPosts = [];
 async function loadPosts(){
   const postsDiv = document.getElementById("posts");
   postsDiv.innerHTML="";
   const querySnapshot = await db.collection("posts").orderBy("date","desc").get();
   allPosts = [];
+  let labels = [], data = [];
   querySnapshot.forEach(doc=>{
     const p = doc.data();
     p.id = doc.id;
     allPosts.push(p);
+    labels.push(p.title);
+    data.push(p.views || 0);
   });
   displayPosts(allPosts);
+  updateChart(labels, data);
 }
 
 function displayPosts(posts){
@@ -154,8 +200,9 @@ function displayPosts(posts){
   postsDiv.innerHTML="";
   posts.forEach(p=>{
     let html = `<div class="post" id="post-${p.id}">
-      <h3>${p.title} <small>[${p.category}]</small></h3>
+      <h3 onclick="increaseView('${p.id}')" style="cursor:pointer;">${p.title} <small>[${p.category}]</small></h3>
       <small>${p.date}</small>
+      <div class="stats">عدد الزيارات: ${p.views || 0}</div>
       <p>${p.content}</p>`;
     if(p.image) html += `<img src="${p.image}">`;
     if(p.video) html += `<video controls src="${p.video}"></video>`;
@@ -168,7 +215,16 @@ function displayPosts(posts){
   });
 }
 
-// --- تعديل المقال ---
+async function increaseView(id){
+  const docRef = db.collection("posts").doc(id);
+  await db.runTransaction(async (t)=>{
+    const doc = await t.get(docRef);
+    const currentViews = doc.data().views || 0;
+    t.update(docRef, {views: currentViews + 1});
+  });
+  loadPosts();
+}
+
 function editPost(id){
   const post = allPosts.find(p=>p.id===id);
   if(!post) return;
@@ -178,7 +234,6 @@ function editPost(id){
   currentEditId = id;
 }
 
-// --- حذف المقال ---
 async function deletePost(id){
   if(confirm("هل تريد حذف هذا المقال؟")){
     await db.collection("posts").doc(id).delete();
@@ -186,21 +241,59 @@ async function deletePost(id){
   }
 }
 
-// --- مشاركة المقال ---
 function sharePost(id){
   const url = window.location.href.split('#')[0]+"#post-"+id;
   navigator.clipboard.writeText(url);
   alert("تم نسخ رابط المشاركة: "+url);
 }
 
-// --- تصفية المقالات ---
 function filterPosts(){
   const keyword = document.getElementById("search").value.toLowerCase();
-  const filtered = allPosts.filter(p=>p.title.toLowerCase().includes(keyword) || p.content.toLowerCase().includes(keyword));
+  const filterCat = document.getElementById("filterCategory").value;
+  const filtered = allPosts.filter(p=>{
+    return (p.title.toLowerCase().includes(keyword) || p.content.toLowerCase().includes(keyword)) &&
+           (filterCat==="" || p.category===filterCat);
+  });
   displayPosts(filtered);
 }
 
-// --- تحميل المقالات عند فتح الصفحة
+function filterBySection(section){
+  if(section === "الرئيسية") window.location.href='index.html';
+  else displayPosts(allPosts.filter(p=>p.category===section));
+}
+
+function changeRadio(){
+  const sel = document.getElementById("radioSelect").value;
+  const radio = document.getElementById("radioPlayer");
+  if(sel==="stream") radio.src = "https://stream-url-example.com/stream.mp3";
+  else if(sel==="morocco") radio.src = "https://morocco-stream-url.com/stream.mp3";
+  radio.load();
+  radio.play();
+}
+
+function updateChart(labels, data){
+  const ctx = document.getElementById('viewsChart').getContext('2d');
+  if(window.viewsChartInstance) window.viewsChartInstance.destroy();
+  window.viewsChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'عدد الزيارات لكل مقال',
+        data: data,
+        backgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        title:{display:true, text:'إحصائيات زيارات المقالات'}
+      }
+    }
+  });
+}
+
 loadPosts();
 </script>
 
