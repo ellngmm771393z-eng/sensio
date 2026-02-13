@@ -2,119 +2,206 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الماسة | Almasa</title>
+<title>Sensio CMS المتكامل</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
 <style>
-body{font-family:tahoma;direction:rtl;margin:0;background:#f5f5f5}
-header{background:#222;color:#fff;text-align:center;padding:15px}
-nav{display:flex;gap:10px;overflow:auto;background:#eee;padding:10px;justify-content:center}
-nav button{padding:8px 14px;border:0;border-radius:6px;background:#ddd;cursor:pointer}
-nav button:hover{background:#ccc}
-#content{max-width:900px;margin:auto;padding:20px}
-.article{background:#fff;padding:15px;border-radius:10px;margin:10px 0;cursor:pointer}
-.article h3{margin:0;color:#222}
-.actions{margin-top:5px}
-.actions button{margin:3px;padding:4px 8px}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center}
-.modal-content{background:#fff;padding:20px;border-radius:10px;max-width:600px;width:90%;max-height:80%;overflow:auto;position:relative}
-.modal-close{position:absolute;top:10px;right:15px;cursor:pointer;font-weight:bold;font-size:18px}
-.copy-btn{margin-left:5px}
+body {font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0;}
+header {background: linear-gradient(90deg,#007bff,#ffd700,#ff0000,#daa520,#c0c0c0); padding:20px; color:white; text-align:center;}
+.container {max-width:1000px; margin:auto; padding:20px;}
+input, textarea, select {width:100%; margin:5px 0; padding:10px; border-radius:5px; border:1px solid #ccc;}
+button {padding:10px 20px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;}
+button:hover {background:#0056b3;}
+.post {background:white; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 0 5px rgba(0,0,0,0.1);}
+.post img, .post video {max-width:100%; margin-top:10px; border-radius:5px;}
+.actions {margin-top:10px;}
+.actions button {margin-right:5px; background:#28a745;}
+.actions button.delete {background:#dc3545;}
+.actions button.edit {background:#ffc107; color:black;}
+.actions button.share {background:#17a2b8;}
+.progress-bar {height:20px; background:#007bff; text-align:center; color:white; border-radius:5px; margin-top:5px;}
+.search-container {margin:20px 0;}
+.search-container input {width:50%; display:inline-block;}
 </style>
 </head>
 <body>
 
 <header>
-<h1>الماسة | Almasa</h1>
-<p>مدونة إسلاميات، لغات، ذكاء إصطناعي ومعرفة عامة - جميع المقالات جاهزة للزوار</p>
+<h1>Sensio - لوحة إدارة المقالات المتكاملة</h1>
 </header>
 
-<nav>
-<button onclick="showSection('islam')">إسلاميات</button>
-<button onclick="showSection('english')">الإنجليزية</button>
-<button onclick="showSection('german')">الألمانية</button>
-<button onclick="showSection('ai')">الذكاء الإصطناعي</button>
-<button onclick="showSection('general')">المعرفة العامة</button>
-</nav>
+<div class="container">
 
-<div id="content"><h2>اختر قسم لعرض المقالات</h2></div>
+<h2>✍️ كتابة مقال جديد</h2>
+<input id="title" placeholder="عنوان المقال">
+<textarea id="content" rows="6" placeholder="اكتب المقال هنا"></textarea>
 
-<!-- Modal -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="modal-close" onclick="closeModal()">×</span>
-    <h2 id="modal-title"></h2>
-    <p id="modal-text"></p>
-    <div class="actions">
-      <button onclick="shareModal()">مشاركة</button>
-      <button class="copy-btn" onclick="copyLink()">نسخ الرابط</button>
-    </div>
-  </div>
+<select id="category">
+<option value="عام">عام</option>
+<option value="أخبار">أخبار</option>
+<option value="صوتيات">صوتيات</option>
+<option value="فيديو">فيديو</option>
+</select>
+
+<input type="file" id="image" accept="image/*">
+<input type="file" id="videoFile" accept="video/*">
+
+<div id="imageProgress" class="progress-bar" style="display:none;">0%</div>
+<div id="videoProgress" class="progress-bar" style="display:none;">0%</div>
+
+<button onclick="publish()">نشر المقال</button>
+
+<hr>
+
+<div class="search-container">
+<input type="text" id="search" placeholder="بحث في المقالات..." oninput="filterPosts()">
+</div>
+
+<h2>📚 المقالات المنشورة</h2>
+<div id="posts"></div>
+
 </div>
 
 <script>
-// البيانات والمقالات لكل قسم فعلي
-let sections = {
-  islam:[
-    {title:"فضل العلم في الإسلام", content:"العلم له مكانة عظيمة في الإسلام، فقد نزل أول ما في القرآن الكريم \"اقرأ\"..."},
-    {title:"أهمية الصلاة", content:"الصلاة ركن أساسي من أركان الإسلام وتؤثر على حياة المسلم اليومية..."}
-  ],
-  english:[
-    {title:"تعلم الإنجليزية بسهولة", content:"طرق تعلم الإنجليزية للمبتدئين والمحترفين مع نصائح عملية..."}
-  ],
-  german:[
-    {title:"أساسيات الألمانية", content:"مقدمة لتعلم اللغة الألمانية وقواعدها الأساسية..."}
-  ],
-  ai:[
-    {title:"مقدمة في الذكاء الإصطناعي", content:"الذكاء الاصطناعي هو فرع من علوم الحاسوب يركز على تطوير أنظمة ذكية..."}
-  ],
-  general:[
-    {title:"حقائق ممتعة", content:"مقالات متنوعة في المعرفة العامة لتوسيع مدارك القارئ..."}
-  ]
+// --- Firebase Configuration ---
+const firebaseConfig = {
+  apiKey: "API_KEY_HERE",
+  authDomain: "PROJECT_ID.firebaseapp.com",
+  projectId: "PROJECT_ID",
+  storageBucket: "PROJECT_ID.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
 };
 
-// عرض القسم
-function showSection(section){
-  const content=document.getElementById('content');
-  content.innerHTML=`<h2>قسم ${section}</h2>`;
-  sections[section].forEach((article,i)=>{
-    const div=document.createElement('div');
-    div.className='article';
-    div.innerHTML=`<h3>${article.title}</h3>`;
-    div.onclick=()=>openModal(section,i);
-    content.appendChild(div);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+// --- نشر المقال ---
+let currentEditId = null;
+
+async function publish(editId=null){
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+  const category = document.getElementById("category").value;
+  const imageFile = document.getElementById("image").files[0];
+  const videoFile = document.getElementById("videoFile").files[0];
+
+  if(!title || !content) return alert("اكتب العنوان والمقال");
+
+  let imageUrl = "", videoUrl = "";
+
+  if(imageFile){
+    const storageRef = storage.ref('images/'+Date.now()+'-'+imageFile.name);
+    const uploadTask = storageRef.put(imageFile);
+    document.getElementById("imageProgress").style.display = "block";
+    uploadTask.on('state_changed', snapshot=>{
+      const progress = Math.floor(snapshot.bytesTransferred/snapshot.totalBytes*100);
+      document.getElementById("imageProgress").textContent = progress + "%";
+    });
+    await uploadTask;
+    imageUrl = await storageRef.getDownloadURL();
+    document.getElementById("imageProgress").style.display = "none";
+  }
+
+  if(videoFile){
+    const storageRef = storage.ref('videos/'+Date.now()+'-'+videoFile.name);
+    const uploadTask = storageRef.put(videoFile);
+    document.getElementById("videoProgress").style.display = "block";
+    uploadTask.on('state_changed', snapshot=>{
+      const progress = Math.floor(snapshot.bytesTransferred/snapshot.totalBytes*100);
+      document.getElementById("videoProgress").textContent = progress + "%";
+    });
+    await uploadTask;
+    videoUrl = await storageRef.getDownloadURL();
+    document.getElementById("videoProgress").style.display = "none";
+  }
+
+  if(editId){
+    await db.collection("posts").doc(editId).update({title, content, category, image:imageUrl, video:videoUrl, date:new Date().toLocaleString()});
+  } else {
+    await db.collection("posts").add({title, content, category, image:imageUrl, video:videoUrl, date:new Date().toLocaleString()});
+  }
+
+  document.getElementById("title").value="";
+  document.getElementById("content").value="";
+  document.getElementById("image").value="";
+  document.getElementById("videoFile").value="";
+  currentEditId = null;
+
+  loadPosts();
+}
+
+// --- عرض المقالات ---
+let allPosts = [];
+async function loadPosts(){
+  const postsDiv = document.getElementById("posts");
+  postsDiv.innerHTML="";
+  const querySnapshot = await db.collection("posts").orderBy("date","desc").get();
+  allPosts = [];
+  querySnapshot.forEach(doc=>{
+    const p = doc.data();
+    p.id = doc.id;
+    allPosts.push(p);
+  });
+  displayPosts(allPosts);
+}
+
+function displayPosts(posts){
+  const postsDiv = document.getElementById("posts");
+  postsDiv.innerHTML="";
+  posts.forEach(p=>{
+    let html = `<div class="post" id="post-${p.id}">
+      <h3>${p.title} <small>[${p.category}]</small></h3>
+      <small>${p.date}</small>
+      <p>${p.content}</p>`;
+    if(p.image) html += `<img src="${p.image}">`;
+    if(p.video) html += `<video controls src="${p.video}"></video>`;
+    html += `<div class="actions">
+      <button class="edit" onclick="editPost('${p.id}')">تعديل</button>
+      <button class="delete" onclick="deletePost('${p.id}')">حذف</button>
+      <button class="share" onclick="sharePost('${p.id}')">مشاركة</button>
+    </div></div>`;
+    postsDiv.innerHTML += html;
   });
 }
 
-// فتح المقال في Modal
-function openModal(section,i){
-  const modal=document.getElementById('modal');
-  const title=document.getElementById('modal-title');
-  const text=document.getElementById('modal-text');
-  let article=sections[section][i];
-  title.innerText=article.title;
-  text.innerText=article.content;
-  modal.style.display='flex';
-  modal.dataset.section=section;
-  modal.dataset.index=i;
+// --- تعديل المقال ---
+function editPost(id){
+  const post = allPosts.find(p=>p.id===id);
+  if(!post) return;
+  document.getElementById("title").value = post.title;
+  document.getElementById("content").value = post.content;
+  document.getElementById("category").value = post.category;
+  currentEditId = id;
 }
 
-function closeModal(){document.getElementById('modal').style.display='none';}
-
-// مشاركة المقال الحالي من Modal
-function shareModal(){
-  const modal=document.getElementById('modal');
-  const s=modal.dataset.section;
-  const i=modal.dataset.index;
-  const article=sections[s][i];
-  const url=encodeURIComponent(location.href);
-  const text=encodeURIComponent(article.title + " - " + article.content);
-  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url + '&quote=' + text);
+// --- حذف المقال ---
+async function deletePost(id){
+  if(confirm("هل تريد حذف هذا المقال؟")){
+    await db.collection("posts").doc(id).delete();
+    loadPosts();
+  }
 }
 
-// نسخ رابط المقال
-function copyLink(){
-  navigator.clipboard.writeText(location.href).then(()=>alert('تم نسخ رابط الصفحة!'));
+// --- مشاركة المقال ---
+function sharePost(id){
+  const url = window.location.href.split('#')[0]+"#post-"+id;
+  navigator.clipboard.writeText(url);
+  alert("تم نسخ رابط المشاركة: "+url);
 }
+
+// --- تصفية المقالات ---
+function filterPosts(){
+  const keyword = document.getElementById("search").value.toLowerCase();
+  const filtered = allPosts.filter(p=>p.title.toLowerCase().includes(keyword) || p.content.toLowerCase().includes(keyword));
+  displayPosts(filtered);
+}
+
+// --- تحميل المقالات عند فتح الصفحة
+loadPosts();
 </script>
 
 </body>
